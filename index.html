@@ -469,7 +469,7 @@
         // STATE VARIABLES
         let currentJointIndex = 0;
         let selectedJoint = PROTOCOLS['ankles'];
-        let currentPhase = 'idle'; // 'idle', 'rpr_speech', 'rpr', 'rpr_complete', 'prep_iso', 'ramp', 'iso', 'prep_next_set', 'prep_vagal', 'vagal_speech', 'vagal', 'next_joint_prep'
+        let currentPhase = 'idle'; // 'idle', 'rpr_speech', 'rpr', 'rpr_complete', 'prep_iso', 'ramp', 'iso_lock', 'iso', 'prep_next_set', 'prep_vagal', 'vagal_speech', 'vagal', 'next_joint_prep'
         let currentSet = 1;
         let timerInterval = null;
         let isAutoSequence = false;
@@ -634,7 +634,7 @@
                 runVagalPhase();
             } else if (currentPhase === 'next_joint_prep') {
                 startProtocolSequence();
-            } else if (currentPhase === 'prep_iso' || currentPhase === 'ramp' || currentPhase === 'iso' || currentPhase === 'vagal') {
+            } else if (currentPhase === 'prep_iso' || currentPhase === 'ramp' || currentPhase === 'iso_lock' || currentPhase === 'iso' || currentPhase === 'vagal' || currentPhase === 'vagal_speech') {
                 stopCoach();
             }
         }
@@ -717,6 +717,8 @@
         // PHASE 2A: 5-SECOND SETUP BUFFER ("GET IN POSITION")
         function runGetInPositionPhase() {
             clearInterval(timerInterval);
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
             currentPhase = 'prep_iso';
             phaseBadge.innerText = 'SETUP: GET IN POSITION';
             phaseBadge.className = 'px-2.5 py-1 bg-amber-500/20 border border-amber-500/50 text-amber-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
@@ -728,20 +730,20 @@
             mainActionBtn.innerHTML = '<i class="fas fa-child"></i> GETTING SET...';
             mainActionBtn.className = 'px-8 py-3.5 bg-amber-600 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition opacity-90';
 
-            speak(`Get into position for ${p.title}. Five... four... three... two... one...`, () => {
-                // If speech finishes before timer, that's fine
-            });
-
-            let secondsLeft = 5;
             timerDisplay.innerText = "05";
             timerSublabel.innerText = 'SET UP';
             setRingProgress(100);
 
+            speak(`Set your position for ${p.title}. Starting in 5 seconds.`);
+
+            let secondsLeft = 5;
             timerInterval = setInterval(() => {
                 secondsLeft--;
-                timerDisplay.innerText = `0${secondsLeft}`;
-                setRingProgress((secondsLeft / 5) * 100);
-                playTone(350, 0.08);
+                if (secondsLeft >= 0) {
+                    timerDisplay.innerText = `0${secondsLeft}`;
+                    setRingProgress((secondsLeft / 5) * 100);
+                    playTone(350, 0.08);
+                }
 
                 if (secondsLeft <= 0) {
                     clearInterval(timerInterval);
@@ -765,7 +767,7 @@
             instructionTitle.innerText = `RAMP UP FORCE (Set ${currentSet})`;
             instructionBody.innerText = `Do not jerk! Slowly ramp up your push force over 5 seconds to 40% effort before holding. ${p.desc}`;
 
-            speak(`Ramp up your force smoothly to 40 percent effort over 5 seconds.`);
+            speak(`Slowly ramp up your force to 40 percent effort.`);
 
             let elapsed = 0;
             const totalMs = p.rampDuration * 1000;
@@ -789,13 +791,38 @@
 
                 if (elapsed >= totalMs) {
                     clearInterval(timerInterval);
-                    playTone(660, 0.25);
-                    runISOHoldPhase();
+                    runISOLockPhase();
                 }
             }, intervalMs);
         }
 
-        // PHASE 2C: ISOMETRIC HOLD
+        // PHASE 2C: DEDICATED LOCK-IN BUFFER (BEFORE HOLD TIMER STARTS)
+        function runISOLockPhase() {
+            currentPhase = 'iso_lock';
+            phaseBadge.innerText = 'TARGET FORCE REACHED';
+            phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+
+            playTone(528, 0.2);
+            setTimeout(() => playTone(660, 0.3), 200);
+
+            timerDisplay.innerText = 'LOCK';
+            timerSublabel.innerText = 'STEADY';
+            setRingProgress(100);
+
+            instructionTitle.innerText = `Target Force Reached - Lock In`;
+            instructionBody.innerText = `Maintain steady 40% effort. Hold countdown starting...`;
+
+            speak(`Target force reached. Hold steady.`, () => {
+                if (currentPhase !== 'iso_lock') return;
+                setTimeout(() => {
+                    if (currentPhase === 'iso_lock') {
+                        runISOHoldPhase();
+                    }
+                }, 500);
+            });
+        }
+
+        // PHASE 2D: ISOMETRIC HOLD COUNTDOWN
         function runISOHoldPhase() {
             currentPhase = 'iso';
             phaseBadge.innerText = 'PHASE 2: ISO HOLD';
@@ -808,8 +835,6 @@
             instructionTitle.innerText = `HOLD TENSION NOW (Set ${currentSet})`;
             instructionBody.innerText = `Hold steady pressure. Squeeze out fluid and inflammation. ${p.desc}`;
 
-            speak(`Hold tension now. Keep steady pressure.`);
-
             let timeRemaining = p.holdDuration;
             timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
             timerSublabel.innerText = 'HOLDING';
@@ -818,8 +843,10 @@
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
                 timeRemaining--;
-                timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
-                setRingProgress((timeRemaining / p.holdDuration) * 100);
+                if (timeRemaining >= 0) {
+                    timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
+                    setRingProgress((timeRemaining / p.holdDuration) * 100);
+                }
 
                 if (timeRemaining === 3) {
                     speak(`Three... two... one...`);
@@ -828,7 +855,8 @@
 
                 if (timeRemaining <= 0) {
                     clearInterval(timerInterval);
-                    playTone(880, 0.3);
+                    playTone(528, 0.4, 'sine');
+                    speak(`Slowly release tension.`);
 
                     if (currentSet < p.sets) {
                         currentSet++;
@@ -856,7 +884,7 @@
             instructionTitle.innerText = `Set ${currentSet - 1} Complete. Take a Breath.`;
             instructionBody.innerText = `Relax. Shake out the joint. When prepared for Set ${currentSet}, click "READY FOR SET ${currentSet}".`;
 
-            speak(`Relax. Shake out the joint. Click Ready for Set ${currentSet} when prepared.`);
+            speak(`Set ${currentSet-1} complete. Relax and shake out the joint. Click Ready for Set ${currentSet} when prepared.`);
         }
 
         // ALL ISO SETS COMPLETE -> PROMPT VAGAL SHIFT
@@ -1003,7 +1031,7 @@
 
             if (currentPhase === 'rpr' || currentPhase === 'rpr_speech' || currentPhase === 'rpr_complete') {
                 runGetInPositionPhase();
-            } else if (currentPhase === 'prep_iso' || currentPhase === 'ramp' || currentPhase === 'iso' || currentPhase === 'prep_next_set' || currentPhase === 'prep_vagal') {
+            } else if (currentPhase === 'prep_iso' || currentPhase === 'ramp' || currentPhase === 'iso_lock' || currentPhase === 'iso' || currentPhase === 'prep_next_set' || currentPhase === 'prep_vagal') {
                 runVagalPhase();
             } else if (currentPhase === 'vagal' || currentPhase === 'vagal_speech') {
                 finishProtocol();
