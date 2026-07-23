@@ -126,7 +126,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             <!-- LEFT: INTERACTIVE COACHING DISPLAY -->
-            <div class="lg:col-span-7 glass-panel p-6 md:p-8 flex flex-col justify-between min-h-[500px] relative overflow-hidden">
+            <div class="lg:col-span-7 glass-panel p-6 md:p-8 flex flex-col justify-between min-h-[520px] relative overflow-hidden">
                 
                 <!-- Status Banner -->
                 <div class="flex justify-between items-center border-b border-[#23362a] pb-4 mb-4">
@@ -144,10 +144,10 @@
                 </div>
 
                 <!-- MAIN TIMER & VISUAL GUIDE -->
-                <div class="flex flex-col items-center justify-center my-6 relative">
+                <div class="flex flex-col items-center justify-center my-4 relative">
                     
                     <!-- SVG Ring Timer -->
-                    <div class="relative w-64 h-64 flex items-center justify-center">
+                    <div class="relative w-60 h-60 flex items-center justify-center">
                         <svg class="w-full h-full" viewBox="0 0 100 100">
                             <!-- Background Circle -->
                             <circle class="text-[#0a0e0c]" stroke-width="6" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50"/>
@@ -162,10 +162,10 @@
                         </div>
                     </div>
 
-                    <!-- 3-Second Ramp-Up Bar (Shows during ISO Ramp) -->
-                    <div id="ramp-container" class="w-full max-w-md mt-6 bg-[#0a0e0c] border border-[#23362a] rounded-xl p-3 hidden">
+                    <!-- 5-Second Ramp-Up Bar (Shows during ISO Ramp) -->
+                    <div id="ramp-container" class="w-full max-w-md mt-4 bg-[#0a0e0c] border border-[#23362a] rounded-xl p-3 hidden">
                         <div class="flex justify-between items-center text-[10px] mono mb-1">
-                            <span class="text-orange-400 font-bold uppercase"><i class="fas fa-tachometer-alt mr-1"></i> Force Ramp-Up (No Jerk)</span>
+                            <span class="text-orange-400 font-bold uppercase"><i class="fas fa-tachometer-alt mr-1"></i> Smooth Force Ramp (No Jerk)</span>
                             <span id="ramp-pct" class="text-zinc-400 font-bold">0%</span>
                         </div>
                         <div class="w-full bg-zinc-900 rounded-full h-3 overflow-hidden border border-zinc-800">
@@ -191,7 +191,7 @@
                 </div>
 
                 <!-- PLAY / PAUSE / READY CONTROLS -->
-                <div class="flex flex-wrap items-center justify-center gap-3 mt-6">
+                <div class="flex flex-wrap items-center justify-center gap-3 mt-5">
                     <button id="main-action-btn" onclick="handleMainAction()" class="px-8 py-3.5 bg-orange-500 hover:bg-orange-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition btn-glow">
                         <i class="fas fa-play"></i> Start Sequence
                     </button>
@@ -307,8 +307,8 @@
                 <!-- CLINICAL PROTOCOL FOOTER NOTE -->
                 <div class="bg-[#0a0e0c] p-4 rounded-xl border border-[#1f2e24] text-xs text-zinc-400 space-y-1">
                     <p class="font-bold text-orange-400 uppercase mono text-[10px]">Non-Negotiable Execution Rules:</p>
-                    <p>• <strong>Zero Pressure/Stress:</strong> Take all the time you need for RPR. Click 'Ready for ISO' when prepared.</p>
-                    <p>• <strong>3-Second Ramp:</strong> Slowly ramp force to 40% effort before holding. No sudden jerk.</p>
+                    <p>• <strong>Zero Stress:</strong> Take all the time you need for RPR. Timers wait for voice instructions to finish.</p>
+                    <p>• <strong>5-Second Ramp:</strong> Slowly ramp force to 40% effort before holding. No sudden jerk.</p>
                 </div>
 
             </div>
@@ -335,13 +335,14 @@
                 name: 'Ankles & Feet',
                 rpr: {
                     title: 'RPR Reset: Medial Tibia & Heel',
-                    desc: 'Scrub the inside of your shin bone from ankle up to knee, and the back of your heel for 10-15 seconds.',
-                    duration: 12
+                    desc: 'Scrub the inside of your shin bone from ankle up to knee, and the back of your heel.',
+                    duration: 15
                 },
                 iso: {
                     title: 'Plantar ISO-Flush (Wall Push)',
                     desc: 'Stand facing a wall. Push the ball of your foot heavily into the ground without lifting your heel. Effort: 4/10.',
-                    rampDuration: 3,
+                    prepDuration: 5,
+                    rampDuration: 5,
                     holdDuration: 8,
                     sets: 2
                 },
@@ -356,13 +357,14 @@
                 name: 'Knees & Patellar Tendon',
                 rpr: {
                     title: 'RPR Reset: Inguinal Hip Crease',
-                    desc: 'Scrub along the crease of the hip where the quads insert. 10-15 seconds of side-swipe friction.',
-                    duration: 12
+                    desc: 'Scrub along the crease of the hip where the quads insert with side-swipe friction.',
+                    duration: 15
                 },
                 iso: {
                     title: 'Patellar Hover Lunge Hold',
                     desc: 'Drop into a split squat, back knee hovering 1 inch off floor. Press front foot firmly down. Effort: 4/10.',
-                    rampDuration: 3,
+                    prepDuration: 5,
+                    rampDuration: 5,
                     holdDuration: 10,
                     sets: 2
                 },
@@ -378,12 +380,13 @@
                 rpr: {
                     title: 'RPR Reset: Jawline & 12th Rib',
                     desc: 'Scrub under the jawline (Glutes) and the bottom edge of the 12th floating rib on your lower back.',
-                    duration: 12
+                    duration: 15
                 },
                 iso: {
                     title: 'Isometric Glute Bridge & Toe Drive',
                     desc: 'Lie supine. Dig heels down, squeeze big toes into the floor, drive hips up. Hold rigid.',
-                    rampDuration: 3,
+                    prepDuration: 5,
+                    rampDuration: 5,
                     holdDuration: 10,
                     sets: 2
                 },
@@ -398,13 +401,14 @@
                 name: 'Wrists & Forearms',
                 rpr: {
                     title: 'RPR Reset: Thumb Webbing',
-                    desc: 'Scrub the soft webbing between your thumb and index finger vigorously for 10-15 seconds.',
-                    duration: 12
+                    desc: 'Scrub the soft webbing between your thumb and index finger vigorously.',
+                    duration: 15
                 },
                 iso: {
                     title: 'The "Core Fist" & Wall Press',
-                    desc: 'Make a fist, trapping index/middle fingers with thumb. Squeeze 5s. Then press fingertips into wall.',
-                    rampDuration: 3,
+                    desc: 'Make a fist, trapping index and middle fingers with thumb. Squeeze 5 seconds, then press fingertips into wall.',
+                    prepDuration: 5,
+                    rampDuration: 5,
                     holdDuration: 8,
                     sets: 2
                 },
@@ -419,13 +423,14 @@
                 name: 'Elbows (Medial & Lateral)',
                 rpr: {
                     title: 'RPR Reset: Brachialis',
-                    desc: 'Scrub the lower outer bicep muscle (Brachialis / "Beer drinking muscle") for 10-15 seconds.',
-                    duration: 12
+                    desc: 'Scrub the lower outer bicep muscle (Brachialis / "Beer drinking muscle").',
+                    duration: 15
                 },
                 iso: {
                     title: 'Under/Over Desk ISO Push',
                     desc: 'Hand under heavy desk, palm down, push UP (Tennis). Then hand on top, palm up, push DOWN (Golfer).',
-                    rampDuration: 3,
+                    prepDuration: 5,
+                    rampDuration: 5,
                     holdDuration: 10,
                     sets: 2
                 },
@@ -440,13 +445,14 @@
                 name: 'Shoulders & Rotator Cuff',
                 rpr: {
                     title: 'RPR Reset: Sub-Clavicular & Ribs',
-                    desc: 'Scrub the underside of collarbone out to armpit, then scrub ribs beneath the pec (Serratus).',
-                    duration: 12
+                    desc: 'Scrub the underside of collarbone out to armpit, then scrub ribs beneath the pec.',
+                    duration: 15
                 },
                 iso: {
                     title: 'Doorframe Rotation ISO',
                     desc: 'Elbow bent 90°. Press back of wrist into doorframe (External rotation) for 5s. Then palm in (Internal).',
-                    rampDuration: 3,
+                    prepDuration: 5,
+                    rampDuration: 5,
                     holdDuration: 10,
                     sets: 2
                 },
@@ -463,7 +469,7 @@
         // STATE VARIABLES
         let currentJointIndex = 0;
         let selectedJoint = PROTOCOLS['ankles'];
-        let currentPhase = 'idle'; // 'idle', 'rpr', 'rpr_complete', 'prep_iso', 'ramp', 'iso', 'prep_next_set', 'prep_vagal', 'vagal', 'next_joint_prep'
+        let currentPhase = 'idle'; // 'idle', 'rpr_speech', 'rpr', 'rpr_complete', 'prep_iso', 'ramp', 'iso', 'prep_next_set', 'prep_vagal', 'vagal_speech', 'vagal', 'next_joint_prep'
         let currentSet = 1;
         let timerInterval = null;
         let isAutoSequence = false;
@@ -517,14 +523,14 @@
         // AUDIO SYNTHESIZER
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        function playTone(freq = 440, duration = 0.1, type = 'sine') {
+        function playTone(freq = 440, duration = 0.15, type = 'sine') {
             try {
                 if (audioCtx.state === 'suspended') audioCtx.resume();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = type;
                 osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
@@ -533,13 +539,33 @@
             } catch (e) {}
         }
 
-        // TEXT TO SPEECH COACH
-        function speak(text) {
-            if (!voiceEnabled || !('speechSynthesis' in window)) return;
+        // TEXT TO SPEECH COACH WITH ROBUST CALLBACK
+        function speak(text, callback) {
+            if (!voiceEnabled || !('speechSynthesis' in window)) {
+                if (callback) callback();
+                return;
+            }
             window.speechSynthesis.cancel();
+            
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 0.95; // Slightly slower, more relaxed pace
+            utterance.rate = 0.85; // Slow, grounded, unhurried pace
             utterance.pitch = 1.0;
+            
+            let callbackExecuted = false;
+            const safeExecuteCallback = () => {
+                if (!callbackExecuted) {
+                    callbackExecuted = true;
+                    if (callback) callback();
+                }
+            };
+
+            utterance.onend = safeExecuteCallback;
+            utterance.onerror = safeExecuteCallback;
+
+            // Fallback timeout in case browser speech engine stalls
+            const fallbackMs = (text.length * 80) + 1500;
+            setTimeout(safeExecuteCallback, fallbackMs);
+
             window.speechSynthesis.speak(utterance);
         }
 
@@ -597,18 +623,18 @@
             startProtocolSequence();
         }
 
-        // MAIN BUTTON ACTION HANDLER (STATE MACHINE SWITCH)
+        // MAIN BUTTON ACTION HANDLER
         function handleMainAction() {
             if (currentPhase === 'idle') {
                 isAutoSequence = false;
                 startProtocolSequence();
-            } else if (currentPhase === 'rpr' || currentPhase === 'rpr_complete' || currentPhase === 'prep_iso' || currentPhase === 'prep_next_set') {
-                runRampPhase();
+            } else if (currentPhase === 'rpr' || currentPhase === 'rpr_speech' || currentPhase === 'rpr_complete' || currentPhase === 'prep_next_set') {
+                runGetInPositionPhase();
             } else if (currentPhase === 'prep_vagal') {
                 runVagalPhase();
             } else if (currentPhase === 'next_joint_prep') {
                 startProtocolSequence();
-            } else if (currentPhase === 'ramp' || currentPhase === 'iso' || currentPhase === 'vagal') {
+            } else if (currentPhase === 'prep_iso' || currentPhase === 'ramp' || currentPhase === 'iso' || currentPhase === 'vagal') {
                 stopCoach();
             }
         }
@@ -620,10 +646,10 @@
             runRPRPhase();
         }
 
-        // PHASE 1: RPR RESET (UNHURRIED)
+        // PHASE 1: RPR RESET (UNHURRIED - SPEECH THEN TIMER)
         function runRPRPhase() {
-            currentPhase = 'rpr';
-            phaseBadge.innerText = 'PHASE 1: RPR RESET';
+            currentPhase = 'rpr_speech';
+            phaseBadge.innerText = 'PHASE 1: RPR INSTRUCTION';
             phaseBadge.className = 'px-2.5 py-1 bg-orange-500/20 border border-orange-500/50 text-orange-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
             
             stepBadge.classList.remove('hidden');
@@ -639,28 +665,36 @@
             instructionTitle.innerText = p.title;
             instructionBody.innerText = `${p.desc} Perform the friction reset now. Take your time, then click 'READY FOR ISO' when prepared.`;
 
-            speak(`Starting ${selectedJoint.name} recovery. Step one: ${p.title}. ${p.desc}. Perform the friction reset now, then click Ready for Iso when prepared.`);
-
-            let timeRemaining = p.duration;
-            timerDisplay.innerText = timeRemaining;
-            timerSublabel.innerText = 'SECONDS';
+            timerDisplay.innerText = 'LISTEN';
+            timerSublabel.innerText = 'COACH';
             setRingProgress(100);
 
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timeRemaining--;
-                if (timeRemaining >= 0) {
-                    timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
-                    setRingProgress((timeRemaining / p.duration) * 100);
-                    playTone(300, 0.05);
-                }
+            // Speak instructions FIRST. Only start timer after speaking completes.
+            speak(`Starting ${selectedJoint.name} recovery. Step one: ${p.title}. ${p.desc}. Take your time, then click Ready for Iso when prepared.`, () => {
+                if (currentPhase !== 'rpr_speech') return; // state changed
+                
+                currentPhase = 'rpr';
+                phaseBadge.innerText = 'PHASE 1: RPR TIMER';
+                
+                let timeRemaining = p.duration;
+                timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
+                timerSublabel.innerText = 'SECONDS';
 
-                if (timeRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    playTone(600, 0.2);
-                    runRPRCompletePhase();
-                }
-            }, 1000);
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    if (timeRemaining >= 0) {
+                        timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
+                        setRingProgress((timeRemaining / p.duration) * 100);
+                    }
+
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        playTone(528, 0.3); // Soft ambient finish chime
+                        runRPRCompletePhase();
+                    }
+                }, 1000);
+            });
         }
 
         // RPR TIMER EXPIRED -> PROMPT USER TO CLICK READY FOR ISO
@@ -675,33 +709,69 @@
 
             const isoP = selectedJoint.iso;
             instructionTitle.innerText = `Get Ready for: ${isoP.title}`;
-            instructionBody.innerText = `RPR reset complete! Get into position for ${isoP.title}. When ready, click "READY FOR ISO" below to start the 3-second force ramp.`;
+            instructionBody.innerText = `RPR reset complete! Get into position for ${isoP.title}. When ready, click "READY FOR ISO" below. You will have 5 seconds to set up before force is applied.`;
 
             speak(`RPR reset complete. Get in position for ${isoP.title}. Click Ready for Iso when prepared.`);
         }
 
-        // PHASE 2A: 3-SECOND FORCE RAMP-UP
+        // PHASE 2A: 5-SECOND SETUP BUFFER ("GET IN POSITION")
+        function runGetInPositionPhase() {
+            clearInterval(timerInterval);
+            currentPhase = 'prep_iso';
+            phaseBadge.innerText = 'SETUP: GET IN POSITION';
+            phaseBadge.className = 'px-2.5 py-1 bg-amber-500/20 border border-amber-500/50 text-amber-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            
+            const p = selectedJoint.iso;
+            instructionTitle.innerText = `Set Up Position: ${p.title}`;
+            instructionBody.innerText = `Set your feet and joint contact points. Force ramp begins in 5 seconds.`;
+
+            mainActionBtn.innerHTML = '<i class="fas fa-child"></i> GETTING SET...';
+            mainActionBtn.className = 'px-8 py-3.5 bg-amber-600 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition opacity-90';
+
+            speak(`Get into position for ${p.title}. Five... four... three... two... one...`, () => {
+                // If speech finishes before timer, that's fine
+            });
+
+            let secondsLeft = 5;
+            timerDisplay.innerText = "05";
+            timerSublabel.innerText = 'SET UP';
+            setRingProgress(100);
+
+            timerInterval = setInterval(() => {
+                secondsLeft--;
+                timerDisplay.innerText = `0${secondsLeft}`;
+                setRingProgress((secondsLeft / 5) * 100);
+                playTone(350, 0.08);
+
+                if (secondsLeft <= 0) {
+                    clearInterval(timerInterval);
+                    runRampPhase();
+                }
+            }, 1000);
+        }
+
+        // PHASE 2B: 5-SECOND SMOOTH FORCE RAMP-UP
         function runRampPhase() {
             currentPhase = 'ramp';
-            phaseBadge.innerText = 'PHASE 2: 3s FORCE RAMP';
+            phaseBadge.innerText = 'PHASE 2: 5s FORCE RAMP';
             phaseBadge.className = 'px-2.5 py-1 bg-amber-500/20 border border-amber-500/50 text-amber-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
             stepBadge.innerText = `STEP 2/3 (SET ${currentSet}/${selectedJoint.iso.sets})`;
 
             rampContainer.classList.remove('hidden');
             mainActionBtn.innerHTML = '<i class="fas fa-hand-rock"></i> RAMPING FORCE...';
-            mainActionBtn.className = 'px-8 py-3.5 bg-amber-600 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition pointer-events-none opacity-90';
+            mainActionBtn.className = 'px-8 py-3.5 bg-amber-600 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition opacity-90';
 
             const p = selectedJoint.iso;
             instructionTitle.innerText = `RAMP UP FORCE (Set ${currentSet})`;
-            instructionBody.innerText = `Do not jerk! Slowly ramp up your push force over 3 seconds to 40% effort before holding. ${p.desc}`;
+            instructionBody.innerText = `Do not jerk! Slowly ramp up your push force over 5 seconds to 40% effort before holding. ${p.desc}`;
 
-            speak(`Prepare for isometric hold. Ramp up your force smoothly over 3 seconds. Three, two, one...`);
+            speak(`Ramp up your force smoothly to 40 percent effort over 5 seconds.`);
 
             let elapsed = 0;
             const totalMs = p.rampDuration * 1000;
             const intervalMs = 50;
 
-            timerDisplay.innerText = "03";
+            timerDisplay.innerText = "05";
             timerSublabel.innerText = 'RAMP UP';
             setRingProgress(100);
 
@@ -715,28 +785,28 @@
                 const secondsLeft = Math.ceil((totalMs - elapsed) / 1000);
                 timerDisplay.innerText = `0${secondsLeft}`;
 
-                if (elapsed % 500 === 0) playTone(400, 0.05, 'triangle');
+                if (elapsed % 1000 === 0) playTone(440, 0.08, 'triangle');
 
                 if (elapsed >= totalMs) {
                     clearInterval(timerInterval);
-                    playTone(800, 0.2);
+                    playTone(660, 0.25);
                     runISOHoldPhase();
                 }
             }, intervalMs);
         }
 
-        // PHASE 2B: ISOMETRIC HOLD
+        // PHASE 2C: ISOMETRIC HOLD
         function runISOHoldPhase() {
             currentPhase = 'iso';
             phaseBadge.innerText = 'PHASE 2: ISO HOLD';
             phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
 
             mainActionBtn.innerHTML = '<i class="fas fa-pause"></i> Pause / Stop';
-            mainActionBtn.className = 'px-8 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition pointer-events-auto';
+            mainActionBtn.className = 'px-8 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition';
 
             const p = selectedJoint.iso;
             instructionTitle.innerText = `HOLD TENSION NOW (Set ${currentSet})`;
-            instructionBody.innerText = `Hold at 40% effort. Squeeze out fluid and inflammation. ${p.desc}`;
+            instructionBody.innerText = `Hold steady pressure. Squeeze out fluid and inflammation. ${p.desc}`;
 
             speak(`Hold tension now. Keep steady pressure.`);
 
@@ -751,14 +821,14 @@
                 timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
                 setRingProgress((timeRemaining / p.holdDuration) * 100);
 
-                if (timeRemaining <= 3 && timeRemaining > 0) {
-                    speak(`${timeRemaining}`);
-                    playTone(500, 0.1);
+                if (timeRemaining === 3) {
+                    speak(`Three... two... one...`);
+                    playTone(440, 0.1);
                 }
 
                 if (timeRemaining <= 0) {
                     clearInterval(timerInterval);
-                    playTone(900, 0.3);
+                    playTone(880, 0.3);
 
                     if (currentSet < p.sets) {
                         currentSet++;
@@ -784,9 +854,9 @@
             timerSublabel.innerText = `SET ${currentSet-1} DONE`;
 
             instructionTitle.innerText = `Set ${currentSet - 1} Complete. Take a Breath.`;
-            instructionBody.innerText = `Relax. Shake out the joint. When prepared for Set ${currentSet}, click "READY FOR SET ${currentSet}" to begin the 3-second force ramp.`;
+            instructionBody.innerText = `Relax. Shake out the joint. When prepared for Set ${currentSet}, click "READY FOR SET ${currentSet}".`;
 
-            speak(`Set ${currentSet-1} complete. Relax. Shake it out. Click Ready for Set ${currentSet} when prepared.`);
+            speak(`Relax. Shake out the joint. Click Ready for Set ${currentSet} when prepared.`);
         }
 
         // ALL ISO SETS COMPLETE -> PROMPT VAGAL SHIFT
@@ -806,12 +876,12 @@
             instructionTitle.innerText = `Ready for: ${p.title}`;
             instructionBody.innerText = `Isometric holds complete! Joint capsule flushed. When ready, click "READY FOR VAGAL SHIFT" to begin deep parasympathetic breathing.`;
 
-            speak(`Isometric holds complete. Great work. When ready, click Ready for Vagal Shift.`);
+            speak(`Isometric holds complete. Joint capsule flushed. Click Ready for Vagal Shift when prepared.`);
         }
 
         // PHASE 3: VAGAL SHIFT BREATHING
         function runVagalPhase() {
-            currentPhase = 'vagal';
+            currentPhase = 'vagal_speech';
             phaseBadge.innerText = 'PHASE 3: VAGAL SHIFT';
             phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
             stepBadge.innerText = 'STEP 3/3';
@@ -824,39 +894,46 @@
             instructionTitle.innerText = p.title;
             instructionBody.innerText = p.desc;
 
-            speak(`Release tension completely. Deep nasal inhale... and long, slow 8-second exhale.`);
-
-            let timeRemaining = p.duration;
-            timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
-            timerSublabel.innerText = 'EXHALING';
+            timerDisplay.innerText = 'BREATHE';
+            timerSublabel.innerText = 'LISTEN';
             setRingProgress(100);
 
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timeRemaining--;
+            speak(`Release tension completely. Deep nasal inhale... and long, slow 8-second exhale. Resetting vagal tone.`, () => {
+                if (currentPhase !== 'vagal_speech') return;
+                
+                currentPhase = 'vagal';
+                let timeRemaining = p.duration;
                 timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
-                setRingProgress((timeRemaining / p.duration) * 100);
+                timerSublabel.innerText = 'EXHALING';
 
-                if (timeRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    playTone(1000, 0.4);
-
-                    if (isAutoSequence && currentJointIndex < JOINT_ORDER.length - 1) {
-                        currentJointIndex++;
-                        runNextJointPrepPhase();
-                    } else {
-                        finishProtocol();
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    if (timeRemaining >= 0) {
+                        timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
+                        setRingProgress((timeRemaining / p.duration) * 100);
                     }
-                }
-            }, 1000);
+
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        playTone(528, 0.4);
+
+                        if (isAutoSequence && currentJointIndex < JOINT_ORDER.length - 1) {
+                            currentJointIndex++;
+                            runNextJointPrepPhase();
+                        } else {
+                            finishProtocol();
+                        }
+                    }
+                }, 1000);
+            });
         }
 
-        // PROMPT NEXT JOINT IN AUTO FLOW (UNHURRIED)
+        // PROMPT NEXT JOINT IN AUTO FLOW
         function runNextJointPrepPhase() {
             currentPhase = 'next_joint_prep';
             const prevJointName = selectedJoint.name;
             
-            // Switch selection visual without stopping sequence
             document.querySelectorAll('.joint-card').forEach(c => c.classList.remove('active-joint'));
             document.getElementById(`card-${JOINT_ORDER[currentJointIndex]}`).classList.add('active-joint');
             selectedJoint = PROTOCOLS[JOINT_ORDER[currentJointIndex]];
@@ -872,7 +949,7 @@
             timerSublabel.innerText = 'NEXT ZONE';
 
             instructionTitle.innerText = `${prevJointName} Recovery Complete`;
-            instructionBody.innerText = `Next target: ${selectedJoint.name}. When you are ready to continue, click the button below.`;
+            instructionBody.innerText = `Next target: ${selectedJoint.name}. Take your time, then click the button below when ready to proceed.`;
 
             speak(`${prevJointName} recovery complete. Next target: ${selectedJoint.name}. Click continue when prepared.`);
         }
@@ -922,9 +999,15 @@
 
         function skipStep() {
             clearInterval(timerInterval);
-            if (currentPhase === 'rpr' || currentPhase === 'rpr_complete' || currentPhase === 'prep_iso') runRampPhase();
-            else if (currentPhase === 'ramp' || currentPhase === 'iso' || currentPhase === 'prep_next_set' || currentPhase === 'prep_vagal') runVagalPhase();
-            else if (currentPhase === 'vagal') finishProtocol();
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
+            if (currentPhase === 'rpr' || currentPhase === 'rpr_speech' || currentPhase === 'rpr_complete') {
+                runGetInPositionPhase();
+            } else if (currentPhase === 'prep_iso' || currentPhase === 'ramp' || currentPhase === 'iso' || currentPhase === 'prep_next_set' || currentPhase === 'prep_vagal') {
+                runVagalPhase();
+            } else if (currentPhase === 'vagal' || currentPhase === 'vagal_speech') {
+                finishProtocol();
+            }
         }
 
         // INITIALIZE APP
