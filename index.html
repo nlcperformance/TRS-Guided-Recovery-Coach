@@ -2,45 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRS // POST-COMBAT RECOVERY COACH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NLC Performance | Post-Combat Recovery</title>
+    <!-- Google Fonts for Professional Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nlc: {
+                            orange: '#FF851B',
+                            darkorange: '#D35400',
+                            base: '#0a0e0c',
+                            panel: '#121c16',
+                            border: '#23362a',
+                            white: '#FFFFFF',
+                            gray: '#5c7a65'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neon-orange': '0 0 20px rgba(255, 133, 27, 0.4)',
+                        'neon-emerald': '0 0 20px rgba(16, 185, 129, 0.4)',
+                        'neon-white': '0 0 20px rgba(255, 255, 255, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700;800&display=swap');
-
-        :root {
-            --bg-base: #0a0e0c;
-            --panel-bg: #121c16;
-            --border-color: #23362a;
-            --brand-orange: #FF851B;
-            --brand-orange-dark: #D35400;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-base);
+            background-color: #0a0e0c;
             color: #e5e5e5;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
-        .mono { font-family: 'JetBrains Mono', monospace; }
+        .timer-text {
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
 
         .text-gradient-orange {
-            background: linear-gradient(to right, var(--brand-orange), var(--brand-orange-dark));
+            background: linear-gradient(to bottom, #FFDEB3 0%, #FF851B 40%, #D35400 75%, #4A1500 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .glass-panel {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+            background: rgba(18, 28, 22, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(35, 54, 42, 0.8);
         }
 
         /* Animated Progress Ring */
@@ -56,431 +79,326 @@
 
         .joint-card {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(18, 28, 22, 0.7);
-            border: 1px solid var(--border-color);
+            background: rgba(18, 28, 22, 0.4);
+            border: 1px solid var(--tw-colors-nlc-border);
         }
 
         .joint-card:hover {
-            border-color: var(--brand-orange);
-            transform: translateY(-2px);
+            border-color: var(--tw-colors-nlc-orange);
             background: rgba(255, 133, 27, 0.05);
         }
 
         .joint-card.active-joint {
-            border-color: var(--brand-orange);
+            border-color: var(--tw-colors-nlc-orange);
             background: rgba(255, 133, 27, 0.12);
-            box-shadow: 0 0 20px rgba(255, 133, 27, 0.25);
+            box-shadow: 0 0 15px rgba(255, 133, 27, 0.15);
         }
 
         .btn-glow {
             box-shadow: 0 0 20px rgba(255, 133, 27, 0.4);
-            animation: pulse-glow 2s infinite;
+            animation: pulse-glow 2.5s infinite;
         }
 
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(255, 133, 27, 0.4); }
-            50% { box-shadow: 0 0 25px rgba(255, 133, 27, 0.8); }
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 133, 27, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(255, 133, 27, 0.7); }
         }
 
-        /* Enhanced Instruction Card */
-        .instruction-card {
-            background: linear-gradient(145deg, #111a14 0%, #0a0e0c 100%);
-            border: 1px solid #23362a;
-            border-left: 4px solid var(--brand-orange);
-        }
+        ::-webkit-scrollbar { display: none; }
+        
+        #floating-tab { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-hidden { transform: translateX(100%); }
     </style>
 </head>
-<body class="p-3 md:p-6 flex flex-col justify-between min-h-screen">
+<body class="min-h-screen flex flex-col justify-between font-sans antialiased selection:bg-nlc-orange" id="app-body">
 
-    <div class="max-w-6xl mx-auto space-y-6 w-full">
+    <!-- Header -->
+    <header class="p-6 z-10 relative flex flex-col items-center justify-center border-b border-nlc-border bg-nlc-base/80 backdrop-blur-md shrink-0">
+        <div class="flex items-center space-x-3 mb-4">
+            <img src="nlcpWHITE.png" alt="NLC Logo" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-nlc-orange shadow-[0_0_10px_rgba(255,133,27,0.3)] object-cover bg-white" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23FF851B\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%230a0e0c\' stroke=\'%23FF851B\' stroke-width=\'4\'/><text x=\'50\' y=\'55\' font-size=\'20\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%23fff\'>NLC</text></svg>';">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-black uppercase text-white drop-shadow-md leading-none" style="letter-spacing: -0.1em;">
+                    my<span class="text-gradient-orange relative z-10" style="margin: 0 -0.12em;">TRS</span>coach
+                </h1>
+                <p class="text-[10px] md:text-xs text-nlc-gray font-bold tracking-[0.15em] mt-1 uppercase">NLC Performance // Post-Combat Recovery</p>
+            </div>
+        </div>
+
+        <!-- Global Controls -->
+        <div class="flex flex-wrap items-center gap-3 justify-center">
+            <span id="screen-lock-badge" class="px-3 py-2 bg-nlc-base border border-nlc-border rounded-lg text-xs font-mono text-zinc-500 flex items-center gap-2 transition-colors">
+                <i id="lock-icon" class="fas fa-lock-open text-zinc-500"></i>
+                <span id="lock-status">Lock: Off</span>
+            </span>
+            <span class="px-3 py-2 bg-nlc-base border border-nlc-border rounded-lg text-xs font-mono text-zinc-400 flex items-center gap-2">
+                <i class="fas fa-mobile-alt text-nlc-orange"></i>
+                <span>Haptics Active</span>
+            </span>
+            <button onclick="startSweep()" class="px-5 py-2.5 bg-gradient-to-r from-nlc-orange to-nlc-darkorange hover:from-orange-400 hover:to-nlc-orange text-black font-black uppercase tracking-wider text-xs rounded-lg shadow-neon-orange flex items-center gap-2 transition">
+                <i class="fas fa-bolt"></i> Execute Sweep x2
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="flex-1 w-full max-w-6xl mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 z-10">
         
-        <!-- HEADER NAVBAR WITH NLC PERFORMANCE LOGO -->
-        <header class="glass-panel p-5 md:p-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center space-x-4">
-                <!-- NLC Performance Logo Badge -->
-                <div class="relative shrink-0">
-                    <img src="nlcpWHITE.png" alt="NLC Performance Logo" class="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-orange-500 shadow-[0_0_15px_rgba(255,133,27,0.4)] object-cover bg-white" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23FF851B\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%230a0e0c\' stroke=\'%23FF851B\' stroke-width=\'4\'/><text x=\'50\' y=\'55\' font-size=\'20\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%23fff\'>NLC</text></svg>';">
-                </div>
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-black uppercase text-white tracking-tighter leading-none">
-                        my<span class="text-gradient-orange">TRS</span>coach
-                    </h1>
-                    <p class="mono text-[10px] md:text-xs text-[#5c7a65] mt-1 tracking-widest uppercase font-bold">
-                        NLC Performance // Post-Combat Recovery System
-                    </p>
-                </div>
-            </div>
-
-            <!-- Global Controls & Indicators -->
-            <div class="flex flex-wrap items-center gap-3 justify-center">
-                <!-- Screen Lock Badge -->
-                <span id="screen-lock-badge" class="px-3 py-2 bg-[#0a0e0c] border border-[#23362a] rounded-lg text-xs mono text-zinc-500 flex items-center gap-2">
-                    <i id="lock-icon" class="fas fa-lock-open text-zinc-500"></i>
-                    <span id="lock-status">Lock: Off</span>
-                </span>
-                
-                <!-- Haptics Badge -->
-                <span class="px-3 py-2 bg-[#0a0e0c] border border-[#23362a] rounded-lg text-xs mono text-zinc-400 flex items-center gap-2">
-                    <i class="fas fa-mobile-alt text-orange-400"></i>
-                    <span>Haptics Active</span>
-                </span>
-
-                <button onclick="startFullRoutine()" class="px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-black font-black uppercase tracking-wide text-xs rounded-lg shadow-lg flex items-center gap-2 transition">
-                    <i class="fas fa-bolt"></i> Bottom-Up Auto Flow
-                </button>
-            </div>
-        </header>
-
-        <!-- MAIN DISPLAY / ACTIVE COACHING CONSOLE -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- LEFT: ACTIVE COACHING CONSOLE -->
+        <div class="lg:col-span-7 glass-panel p-5 md:p-8 rounded-2xl shadow-2xl flex flex-col relative overflow-hidden h-full">
             
-            <!-- LEFT: INTERACTIVE COACHING DISPLAY -->
-            <div class="lg:col-span-7 glass-panel p-5 md:p-8 flex flex-col justify-between min-h-[520px] relative overflow-hidden">
-                
-                <!-- Status Banner -->
-                <div class="flex justify-between items-center border-b border-[#23362a] pb-4 mb-4 shrink-0">
-                    <div class="flex items-center space-x-2">
-                        <span id="phase-badge" class="px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-zinc-300 mono text-[10px] uppercase tracking-widest rounded-md font-bold">
-                            STANDBY MODE
-                        </span>
-                        <span id="step-badge" class="px-2.5 py-1 bg-orange-500/10 border border-orange-500/30 text-orange-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold hidden">
-                            STEP 1/3
-                        </span>
-                    </div>
-                    <span id="target-joint-label" class="mono text-xs text-orange-400 font-bold uppercase tracking-wider">
-                        Select a Target Joint
+            <!-- Glow Effect -->
+            <div id="panel-glow" class="absolute -top-32 -left-32 w-64 h-64 bg-nlc-orange rounded-full mix-blend-screen filter blur-[100px] opacity-20 transition-colors duration-1000"></div>
+
+            <!-- Status Banner -->
+            <div class="flex justify-between items-center border-b border-nlc-border pb-4 mb-4 shrink-0 relative z-10">
+                <div class="flex items-center space-x-2">
+                    <span id="phase-badge" class="px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-zinc-300 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold">
+                        STANDBY MODE
+                    </span>
+                    <span id="step-badge" class="px-2.5 py-1 bg-nlc-orange/10 border border-nlc-orange/30 text-nlc-orange font-mono text-[10px] uppercase tracking-widest rounded-md font-bold hidden">
+                        STEP 1/3
                     </span>
                 </div>
-
-                <!-- MAIN TIMER & VISUAL GUIDE -->
-                <div class="flex flex-col items-center justify-center my-4 relative shrink-0">
-                    
-                    <!-- SVG Ring Timer -->
-                    <div class="relative w-56 h-56 md:w-60 md:h-60 flex items-center justify-center">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <!-- Background Circle -->
-                            <circle class="text-[#0a0e0c]" stroke-width="6" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50"/>
-                            <!-- Progress Circle -->
-                            <circle id="timer-ring" class="progress-ring__circle text-orange-500" stroke-width="6" stroke-dasharray="263.89" stroke-dashoffset="0" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50"/>
-                        </svg>
-
-                        <!-- Central Digital Display -->
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                            <span id="timer-display" class="mono text-4xl md:text-5xl font-black text-white tracking-tighter">00</span>
-                            <span id="timer-sublabel" class="mono text-[10px] text-zinc-400 uppercase tracking-widest mt-1">STATUS</span>
-                        </div>
-                    </div>
-
-                    <!-- 5-Second Ramp-Up Bar (Shows during ISO Ramp) -->
-                    <div id="ramp-container" class="w-full max-w-md mt-4 bg-[#0a0e0c] border border-[#23362a] rounded-xl p-3 hidden">
-                        <div class="flex justify-between items-center text-[10px] mono mb-1">
-                            <span class="text-orange-400 font-bold uppercase"><i class="fas fa-tachometer-alt mr-1"></i> Smooth Force Ramp</span>
-                            <span id="ramp-pct" class="text-zinc-400 font-bold">0%</span>
-                        </div>
-                        <div class="w-full bg-zinc-900 rounded-full h-3 overflow-hidden border border-zinc-800">
-                            <div id="ramp-bar" class="ramp-bar bg-gradient-to-r from-emerald-500 via-amber-500 to-orange-500 h-full w-0 rounded-full"></div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- LIVE INSTRUCTION BOX (ENHANCED FOR READING) -->
-                <div class="instruction-card p-5 md:p-6 rounded-xl relative mt-2 mb-4 shrink-0 shadow-lg">
-                    <h3 id="instruction-title" class="text-orange-400 font-black text-lg md:text-xl uppercase tracking-wide mb-2">
-                        Ready to Begin
-                    </h3>
-                    <p id="instruction-body" class="text-base md:text-lg text-zinc-200 leading-relaxed font-medium">
-                        Click <strong class="text-white">"Bottom-Up Auto Flow"</strong> to run the full post-session recovery sequence, or click any specific joint on the right.
-                    </p>
-                </div>
-
-                <!-- PLAY / PAUSE / READY CONTROLS -->
-                <div class="flex flex-wrap items-center justify-center gap-3 mt-auto shrink-0">
-                    <button id="main-action-btn" onclick="handleMainAction()" class="px-8 py-4 bg-orange-500 hover:bg-orange-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition btn-glow w-full md:w-auto justify-center">
-                        <i class="fas fa-play"></i> Start Sequence
-                    </button>
-                    <button id="stop-btn" onclick="stopCoach()" class="px-5 py-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 font-bold uppercase text-xs rounded-xl tracking-wider transition hidden md:flex items-center">
-                        <i class="fas fa-square mr-1"></i> Stop
-                    </button>
-                    <!-- Mobile Stop Button -->
-                    <button onclick="stopCoach()" class="w-full mt-2 px-5 py-3 bg-red-950/30 hover:bg-red-900/50 border border-red-900/50 text-red-400 font-bold uppercase text-xs rounded-xl tracking-wider transition md:hidden flex justify-center items-center">
-                        <i class="fas fa-square mr-2"></i> Stop Current Sequence
-                    </button>
-                </div>
-
+                <span id="target-joint-label" class="font-mono text-[11px] text-nlc-orange font-bold uppercase tracking-wider text-right">
+                    Select Mode or Joint
+                </span>
             </div>
 
-            <!-- RIGHT: TARGET JOINT SELECTOR GRID -->
-            <div class="lg:col-span-5 space-y-3">
-                
-                <div class="flex justify-between items-center mb-1">
-                    <h2 class="mono text-xs font-bold text-zinc-400 uppercase tracking-widest">
-                        <i class="fas fa-bullseye text-orange-500 mr-1"></i> Select Recovery Zone
-                    </h2>
-                    <span class="text-[10px] mono text-[#5c7a65]">Dr. Baar 5-10s ISO Flush</span>
+            <!-- TIMER VISUAL -->
+            <div class="flex flex-col items-center justify-center flex-1 py-4 relative z-10">
+                <div class="relative w-56 h-56 md:w-64 md:h-64 flex items-center justify-center">
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                        <circle class="text-nlc-base" stroke-width="4" stroke="currentColor" fill="transparent" r="46" cx="50" cy="50"/>
+                        <circle id="timer-ring" class="text-nlc-orange transition-all duration-1000 ease-linear" stroke-width="6" stroke-dasharray="289.02" stroke-dashoffset="289.02" stroke-linecap="round" stroke="currentColor" fill="transparent" r="46" cx="50" cy="50"/>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                        <span id="timer-display" class="font-mono text-5xl md:text-6xl font-black text-white tracking-tighter timer-text">00</span>
+                        <span id="timer-sublabel" class="font-mono text-[10px] text-zinc-400 uppercase tracking-widest mt-2">STATUS</span>
+                    </div>
                 </div>
 
-                <!-- Joint List -->
-                <div class="grid grid-cols-1 gap-2.5">
-                    
-                    <!-- 1. Ankles & Feet -->
-                    <div id="card-ankles" onclick="selectJoint('ankles')" class="joint-card p-4 rounded-xl cursor-pointer flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400">
-                                <i class="fas fa-shoe-prints text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm uppercase">1. Ankles & Feet</h4>
-                                <p class="text-[10px] text-zinc-400 mono">Medial Tibia + Plantar ISO (Left/Right)</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-zinc-600 text-xs"></i>
+                <!-- Ramp Bar -->
+                <div id="ramp-container" class="w-full max-w-sm mt-6 bg-nlc-base border border-nlc-border rounded-xl p-3 hidden">
+                    <div class="flex justify-between items-center text-[10px] font-mono mb-1.5">
+                        <span class="text-nlc-orange font-bold uppercase tracking-wider"><i class="fas fa-tachometer-alt mr-1"></i> Force Ramp</span>
+                        <span id="ramp-pct" class="text-zinc-400 font-bold">0%</span>
                     </div>
-
-                    <!-- 2. Knees -->
-                    <div id="card-knees" onclick="selectJoint('knees')" class="joint-card p-4 rounded-xl cursor-pointer flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400">
-                                <i class="fas fa-child text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm uppercase">2. Knees</h4>
-                                <p class="text-[10px] text-zinc-400 mono">Hip Crease + Hover Lunge (Left/Right)</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-zinc-600 text-xs"></i>
+                    <div class="w-full bg-zinc-900 rounded-full h-2.5 overflow-hidden shadow-inner">
+                        <div id="ramp-bar" class="ramp-bar bg-gradient-to-r from-emerald-500 via-amber-500 to-nlc-orange h-full w-0 rounded-full"></div>
                     </div>
-
-                    <!-- 3. Hips & Lower Back -->
-                    <div id="card-hips" onclick="selectJoint('hips')" class="joint-card p-4 rounded-xl cursor-pointer flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400">
-                                <i class="fas fa-compress-arrows-alt text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm uppercase">3. Hips & Lower Back</h4>
-                                <p class="text-[10px] text-zinc-400 mono">Jawline/Ribs + Glute Bridge (Bilateral)</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-zinc-600 text-xs"></i>
-                    </div>
-
-                    <!-- 4. Wrists & Forearms -->
-                    <div id="card-wrists" onclick="selectJoint('wrists')" class="joint-card p-4 rounded-xl cursor-pointer flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400">
-                                <i class="fas fa-hand-fist text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm uppercase">4. Wrists & Forearms</h4>
-                                <p class="text-[10px] text-zinc-400 mono">Webbing + Core Fist ISO (Bilateral)</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-zinc-600 text-xs"></i>
-                    </div>
-
-                    <!-- 5. Elbows -->
-                    <div id="card-elbows" onclick="selectJoint('elbows')" class="joint-card p-4 rounded-xl cursor-pointer flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400">
-                                <i class="fas fa-hand-back-fist text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm uppercase">5. Elbows</h4>
-                                <p class="text-[10px] text-zinc-400 mono">Brachialis + Push UP / Push DOWN</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-zinc-600 text-xs"></i>
-                    </div>
-
-                    <!-- 6. Shoulders -->
-                    <div id="card-shoulders" onclick="selectJoint('shoulders')" class="joint-card p-4 rounded-xl cursor-pointer flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400">
-                                <i class="fas fa-user-shield text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm uppercase">6. Shoulders & Rotator Cuff</h4>
-                                <p class="text-[10px] text-zinc-400 mono">Sub-Clavicular + Doorframe (Left/Right)</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-zinc-600 text-xs"></i>
-                    </div>
-
                 </div>
+            </div>
 
-                <!-- CLINICAL PROTOCOL FOOTER NOTE -->
-                <div class="bg-[#0a0e0c] p-4 rounded-xl border border-[#1f2e24] text-xs text-zinc-400 space-y-1">
-                    <p class="font-bold text-orange-400 uppercase mono text-[10px]">Zero-Friction Execution:</p>
-                    <p>• <strong>Pacing:</strong> The app will wait for you. Tap the buttons ONLY when you are physically in position.</p>
-                    <p>• <strong>Haptics:</strong> Tones and vibrations will guide your timing so you don't need to stare at the screen.</p>
-                </div>
+            <!-- INSTRUCTION CARD -->
+            <div class="bg-gradient-to-b from-nlc-base to-black p-5 rounded-xl border-l-4 border-nlc-orange border-y border-r border-nlc-border relative z-10 shrink-0 mt-4 mb-6 shadow-lg">
+                <h3 id="instruction-title" class="text-nlc-orange font-black text-lg uppercase tracking-wide mb-2">
+                    Ready to Begin
+                </h3>
+                <p id="instruction-body" class="text-sm md:text-base text-zinc-200 leading-relaxed font-medium">
+                    Click <strong class="text-white">"Execute Sweep x2"</strong> above for the full circuit, or select a specific joint on the right to perform a localized flush.
+                </p>
+            </div>
 
+            <!-- ACTION BUTTONS -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 shrink-0 z-10">
+                <button id="main-action-btn" onclick="handleMainAction()" class="w-full sm:w-auto px-8 py-4 bg-nlc-orange hover:bg-orange-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow">
+                    <i class="fas fa-play"></i> Start Sequence
+                </button>
+                <button id="stop-btn" onclick="stopCoach()" class="w-full sm:w-auto px-5 py-4 bg-red-950/30 hover:bg-red-900/50 border border-red-900/50 text-red-400 font-bold uppercase text-xs rounded-xl tracking-wider transition flex items-center justify-center gap-2 hidden">
+                    <i class="fas fa-square"></i> Abort
+                </button>
             </div>
 
         </div>
 
-    </div>
+        <!-- RIGHT: SELECTOR & DOSING GRID -->
+        <div class="lg:col-span-5 space-y-3 flex flex-col h-full">
+            
+            <div class="flex justify-between items-end mb-1 shrink-0">
+                <h2 class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-widest">
+                    <i class="fas fa-bullseye text-nlc-orange mr-1"></i> Zone & Dose Selection
+                </h2>
+            </div>
 
-    <!-- FOOTER WITH BRAND LOGO AND SIGNATURE KEY PHRASE -->
-    <footer class="w-full text-center py-6 border-t border-[#23362a] mt-8 flex flex-col items-center justify-center gap-3">
-        <img src="nlcpWHITE.png" alt="NLC Performance Emblem" class="w-14 h-14 rounded-full border-2 border-orange-500 shadow-[0_0_15px_rgba(255,133,27,0.3)] object-cover bg-white" onerror="this.style.display='none'">
-        <p class="mono text-sm md:text-base font-black uppercase tracking-[0.35em] text-gradient-orange">
+            <!-- Joint List -->
+            <div class="grid grid-cols-1 gap-2.5 overflow-y-auto pr-1 pb-2 flex-1" id="joint-grid">
+                
+                <!-- JS Will Inject Cards Here to Keep HTML Dry -->
+
+            </div>
+
+            <!-- CLINICAL FOOTER -->
+            <div class="bg-nlc-panel p-4 rounded-xl border border-nlc-border text-xs text-zinc-300 space-y-2 shrink-0 shadow-lg mt-2">
+                <p class="font-black text-white uppercase font-mono text-[10px] tracking-wider border-b border-nlc-border pb-1">Execution Architecture:</p>
+                <p class="flex items-start"><i class="fas fa-angle-right text-nlc-orange mt-1 mr-2 text-[10px]"></i> <span><strong>Sweep x2:</strong> Flushes all joints circuit-style. Allows optimal 2-3 min "sponge refill" rest while sweeping other zones.</span></p>
+                <p class="flex items-start"><i class="fas fa-angle-right text-nlc-orange mt-1 mr-2 text-[10px]"></i> <span><strong>Zero Stress:</strong> The timers will wait for you. Click the buttons ONLY when you are locked in position.</span></p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-5 border-t border-nlc-border mt-auto bg-nlc-base/80 backdrop-blur-md z-10 shrink-0">
+        <p class="font-mono text-xs md:text-sm font-black uppercase tracking-[0.35em] text-gradient-orange">
             Adapt. Recover. Master.
         </p>
-        <p class="text-[10px] mono text-[#5c7a65] uppercase tracking-widest">NLC Performance // myTRS Method // Performance Architecture</p>
     </footer>
+
+    <!-- Floating Clinical Notes -->
+    <button onclick="toggleSuggestions()" class="fixed right-0 top-1/3 glass-panel !bg-nlc-panel/90 text-nlc-orange py-6 px-2.5 rounded-l-xl shadow-neon-orange z-40 font-bold tracking-widest flex flex-col items-center space-y-3 border-y border-l border-nlc-orange/50 hover:scale-105 origin-right transition-transform">
+        <i class="fas fa-book-medical text-lg"></i>
+        <span class="[writing-mode:vertical-rl] transform rotate-180 hidden md:block text-[10px] uppercase font-mono tracking-widest">Protocol Rules</span>
+    </button>
+
+    <div id="floating-tab" class="fixed right-0 top-0 h-full w-80 max-w-[85vw] glass-panel !bg-nlc-base/95 !backdrop-blur-2xl border-l border-nlc-orange/30 shadow-2xl z-50 tab-hidden flex flex-col">
+        <div class="p-6 border-b border-nlc-border flex justify-between items-center bg-gradient-to-r from-nlc-panel to-nlc-base">
+            <h3 class="text-sm font-black tracking-widest uppercase text-white drop-shadow-md font-mono"><i class="fas fa-clipboard-list text-nlc-orange mr-2"></i> Clinical Notes</h3>
+            <button onclick="toggleSuggestions()" class="text-zinc-500 hover:text-white transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="p-6 space-y-5 overflow-y-auto flex-1">
+            <div class="bg-nlc-panel p-5 rounded-xl border border-nlc-border shadow-inner">
+                <h4 class="text-nlc-orange font-black uppercase tracking-widest text-[10px] mb-2">10s Flush vs 30s Rehab</h4>
+                <p class="text-[11px] text-zinc-300 leading-relaxed"><strong class="text-white">10s Flush:</strong> Maintenance dose for healthy joints. Mechanically clears edema and metabolic waste.</p>
+                <p class="text-[11px] text-zinc-300 leading-relaxed mt-2"><strong class="text-white">30s Rehab:</strong> Required for injured or chronically achy joints. The extended tension triggers tenocytes to lay down new collagen.</p>
+            </div>
+            
+            <div class="bg-nlc-panel p-5 rounded-xl border border-nlc-border shadow-inner">
+                <h4 class="text-nlc-orange font-black uppercase tracking-widest text-[10px] mb-2">The Sweep Protocol</h4>
+                <p class="text-[11px] text-zinc-300 leading-relaxed">Performing a full-body sweep is biologically superior. Compressing a tendon squeezes fluid out. Resting 2-3 minutes allows the "vacuum effect" to draw fresh arterial blood back in. Sweeping other joints provides this perfect rest interval organically.</p>
+            </div>
+
+            <div class="bg-orange-950/20 p-5 rounded-xl border border-orange-900/30">
+                <h4 class="text-white font-black uppercase tracking-widest text-[10px] mb-2 flex items-center">
+                    <i class="fas fa-exclamation-triangle text-nlc-orange mr-2"></i> Safety Override
+                </h4>
+                <p class="text-[11px] text-zinc-300 leading-relaxed">No matter the duration, <strong class="text-white">NEVER jerk into an isometric hold</strong>. Force must be smoothly ramped up over 5 seconds. Apply only 40% effort. Do not hold your breath.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-overlay" onclick="toggleSuggestions()" class="fixed inset-0 bg-black/70 z-40 hidden backdrop-blur-sm transition-opacity duration-300"></div>
 
     <!-- APP LOGIC & STATE MACHINE -->
     <script>
-        // PROTOCOL DATA STRUCTURE (Explicit Left/Right Set Handling)
+        // PROTOCOL DATA STRUCTURE
         const PROTOCOLS = {
             ankles: {
                 id: 'ankles',
                 name: 'Ankles & Feet',
-                rpr: {
-                    title: 'RPR Reset: Medial Tibia & Heel',
-                    desc: 'Scrub the inside of your shin bone from ankle up to knee, and the back of your heel on BOTH legs.',
-                    duration: 15
-                },
-                iso: {
-                    title: 'Plantar ISO-Flush (Wall Push)',
-                    desc: 'Stand facing a wall. Push the ball of your foot heavily into the ground without lifting your heel. Effort: 4/10.',
-                    rampDuration: 5,
-                    holdDuration: 8,
-                    sets: 2,
-                    setLabels: ['Left Foot', 'Right Foot']
-                },
-                vagal: {
-                    title: 'Parasympathetic Exhale',
-                    desc: 'Deep nasal inhale for 4 seconds, followed by a long, slow 8-second exhale. Resetting vagal tone.',
-                    duration: 12
-                }
+                icon: 'fa-shoe-prints',
+                subtitle: 'Plantar ISO (Wall Push)',
+                rpr: 'Medial Tibia & Achilles Base',
+                desc: 'Face a wall. Push the ball of your foot heavily into the ground without lifting your heel. 40% effort.',
+                setLabels: ['Left Foot', 'Right Foot']
             },
             knees: {
                 id: 'knees',
-                name: 'Knees & Patellar Tendon',
-                rpr: {
-                    title: 'RPR Reset: Inguinal Hip Crease',
-                    desc: 'Scrub along the crease of the hip where the quads insert with side-swipe friction on BOTH hips.',
-                    duration: 15
-                },
-                iso: {
-                    title: 'Patellar Hover Lunge Hold',
-                    desc: 'Drop into a split squat, back knee hovering 1 inch off floor. Press front foot firmly down. Effort: 4/10.',
-                    rampDuration: 5,
-                    holdDuration: 10,
-                    sets: 2,
-                    setLabels: ['Left Leg Forward', 'Right Leg Forward']
-                },
-                vagal: {
-                    title: 'Parasympathetic Exhale',
-                    desc: 'Deep breath into lower belly. Slow, controlled release. Releasing patellar tension.',
-                    duration: 12
-                }
+                name: 'Knees & Patellar',
+                icon: 'fa-child',
+                subtitle: 'Hover Lunge Hold',
+                rpr: 'Inguinal Hip Crease',
+                desc: 'Split squat, back knee 1 inch off floor. Press front foot firmly down and pull back slightly.',
+                setLabels: ['Left Leg Forward', 'Right Leg Forward']
             },
             hips: {
                 id: 'hips',
                 name: 'Hips & Lower Back',
-                rpr: {
-                    title: 'RPR Reset: Jawline & 12th Rib',
-                    desc: 'Scrub under the jawline (Glutes) and the bottom edge of the 12th floating rib on your lower back.',
-                    duration: 15
-                },
-                iso: {
-                    title: 'Isometric Glute Bridge & Toe Drive',
-                    desc: 'Lie supine. Dig BOTH heels down, squeeze big toes into the floor, drive hips up. Hold rigid.',
-                    rampDuration: 5,
-                    holdDuration: 10,
-                    sets: 2,
-                    setLabels: ['Set 1 (Bilateral)', 'Set 2 (Bilateral)']
-                },
-                vagal: {
-                    title: 'Parasympathetic Exhale',
-                    desc: 'Relax hips to floor. Slow nasal breathing. Squeezing out QL tension.',
-                    duration: 12
-                }
+                icon: 'fa-compress-arrows-alt',
+                subtitle: 'Glute Bridge & Toe Drive',
+                rpr: 'Jawline & 12th Floating Rib',
+                desc: 'Lie supine. Dig heels down, squeeze big toes into the floor, drive hips up. Hold rigid.',
+                setLabels: ['Bilateral Hold', 'Bilateral Hold']
             },
             wrists: {
                 id: 'wrists',
                 name: 'Wrists & Forearms',
-                rpr: {
-                    title: 'RPR Reset: Thumb Webbing',
-                    desc: 'Scrub the soft webbing between your thumb and index finger vigorously on BOTH hands.',
-                    duration: 15
-                },
-                iso: {
-                    title: 'The "Core Fist" & Wall Press',
-                    desc: 'Make a fist with BOTH hands, trapping index and middle fingers with thumb. Squeeze 5 seconds, then press fingertips into wall.',
-                    rampDuration: 5,
-                    holdDuration: 8,
-                    sets: 2,
-                    setLabels: ['Set 1 (Bilateral)', 'Set 2 (Bilateral)']
-                },
-                vagal: {
-                    title: 'Parasympathetic Exhale',
-                    desc: 'Drop hands to lap. Long slow exhale. Clearing over-grip fatigue.',
-                    duration: 12
-                }
+                icon: 'fa-hand-fist',
+                subtitle: 'Core Fist Wall Press',
+                rpr: 'Thumb/Index Webbing',
+                desc: 'Trap index/middle fingers with thumb. Make a tight fist, flex wrist, press knuckles into wall.',
+                setLabels: ['Bilateral Press', 'Bilateral Press']
             },
             elbows: {
                 id: 'elbows',
-                name: 'Elbows (Medial & Lateral)',
-                rpr: {
-                    title: 'RPR Reset: Brachialis',
-                    desc: 'Scrub the lower outer bicep muscle (Brachialis / "Beer drinking muscle") on BOTH arms.',
-                    duration: 15
-                },
-                iso: {
-                    title: 'Under/Over Desk ISO Push',
-                    desc: 'Perform with BOTH arms simultaneously against a desk or stable object.',
-                    rampDuration: 5,
-                    holdDuration: 10,
-                    sets: 2,
-                    setLabels: ['Tennis Elbow: Palms DOWN, Push UP', 'Golfer\'s Elbow: Palms UP, Push DOWN']
-                },
-                vagal: {
-                    title: 'Parasympathetic Exhale',
-                    desc: 'Inhale deeply, slow 8-second exhale. Squeezing fluid out of the epicondyles.',
-                    duration: 12
-                }
+                name: 'Elbows (Epicondyles)',
+                icon: 'fa-hand-back-fist',
+                subtitle: 'Under/Over Desk Push',
+                rpr: 'Brachialis (Outer Bicep)',
+                desc: 'Lock elbows at 90°. Perform against an immovable desk. 5s ramp is critical. Do not jerk.',
+                setLabels: ['Palms DOWN, Push UP', 'Palms UP, Push DOWN']
             },
             shoulders: {
                 id: 'shoulders',
-                name: 'Shoulders & Rotator Cuff',
-                rpr: {
-                    title: 'RPR Reset: Sub-Clavicular & Ribs',
-                    desc: 'Scrub the underside of collarbone out to armpit, then scrub ribs beneath the pec. BOTH sides.',
-                    duration: 15
-                },
-                iso: {
-                    title: 'Doorframe Rotation ISO',
-                    desc: 'Elbow bent 90°. Press back of wrist into doorframe (External rotation).',
-                    rampDuration: 5,
-                    holdDuration: 10,
-                    sets: 2,
-                    setLabels: ['Left Shoulder', 'Right Shoulder']
-                },
-                vagal: {
-                    title: 'Parasympathetic Exhale',
-                    desc: 'Slow nasal breath. Let shoulders sink into back pockets.',
-                    duration: 12
-                }
+                name: 'Shoulders & Cuff',
+                icon: 'fa-user-shield',
+                subtitle: 'Doorframe Rotation ISO',
+                rpr: 'Sub-Clavicular & Ribs',
+                desc: 'Elbow bent 90°. Press back of wrist into doorframe (External rotation) or palm inward (Internal).',
+                setLabels: ['Left Shoulder', 'Right Shoulder']
             }
         };
 
         const JOINT_ORDER = ['ankles', 'knees', 'hips', 'wrists', 'elbows', 'shoulders'];
+        
+        // Dynamic User Selections (10s vs 30s)
+        let jointDurations = { ankles: 10, knees: 10, hips: 10, wrists: 10, elbows: 10, shoulders: 10 };
 
         // STATE VARIABLES
         let currentJointIndex = 0;
         let selectedJoint = PROTOCOLS['ankles'];
-        let currentPhase = 'idle'; // idle, rpr_prep, rpr_timer, iso_prep, get_ready, ramp, iso_lock, iso_hold, next_set_prep, vagal_prep, vagal_timer, joint_complete
+        let currentPhase = 'idle'; // idle, global_rpr_prep, global_rpr_timer, local_rpr_prep, local_rpr_timer, iso_prep, get_ready, ramp, iso_lock, iso_hold, next_set_prep, sweep_next_prep, vagal_prep, vagal_timer, complete
         let currentSet = 1;
+        let sweepSet = 1;
         let timerInterval = null;
-        let isAutoSequence = false;
+        let isSweepMode = false;
         let wakeLock = null;
 
-        // SCREEN WAKE LOCK FUNCTIONS
+        // --- DOM RENDERER FOR JOINT CARDS ---
+        function renderJointGrid() {
+            const grid = document.getElementById('joint-grid');
+            grid.innerHTML = '';
+            
+            JOINT_ORDER.forEach((key, index) => {
+                const p = PROTOCOLS[key];
+                const card = document.createElement('div');
+                card.id = `card-${key}`;
+                card.className = `joint-card p-3.5 rounded-xl cursor-pointer flex flex-col justify-between`;
+                card.onclick = () => selectJoint(key);
+                
+                card.innerHTML = `
+                    <div class="flex items-start space-x-3 w-full">
+                        <div class="w-8 h-8 rounded-lg bg-nlc-base/50 border border-nlc-border flex items-center justify-center text-nlc-orange shrink-0 mt-1">
+                            <i class="fas ${p.icon} text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center w-full">
+                                <h4 class="text-white font-bold text-sm uppercase tracking-wide leading-none">${index + 1}. ${p.name}</h4>
+                            </div>
+                            <p class="text-[10px] text-zinc-400 font-mono mt-1">${p.subtitle}</p>
+                            
+                            <!-- Toggle Buttons -->
+                            <div class="flex items-center gap-1.5 mt-2.5" onclick="event.stopPropagation()">
+                                <button id="btn-10s-${key}" onclick="setDuration('${key}', 10)" class="flex-1 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors ${jointDurations[key] === 10 ? 'bg-nlc-orange text-black' : 'bg-nlc-base text-zinc-400 border border-nlc-border'}">10s Flush</button>
+                                <button id="btn-30s-${key}" onclick="setDuration('${key}', 30)" class="flex-1 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors ${jointDurations[key] === 30 ? 'bg-amber-600 text-black' : 'bg-nlc-base text-zinc-400 border border-nlc-border'}">30s Rehab</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            // Re-highlight current
+            document.getElementById(`card-${selectedJoint.id}`).classList.add('active-joint');
+        }
+
+        function setDuration(jointId, duration) {
+            jointDurations[jointId] = duration;
+            renderJointGrid();
+        }
+
+        // --- WAKE LOCK ---
         async function requestWakeLock() {
             try {
                 if ('wakeLock' in navigator) {
@@ -505,13 +423,12 @@
             const badge = document.getElementById('screen-lock-badge');
             const icon = document.getElementById('lock-icon');
             const status = document.getElementById('lock-status');
-
             if (isActive) {
-                badge.className = "px-3 py-2 bg-orange-500/20 border border-orange-500/50 rounded-lg text-xs mono text-orange-400 flex items-center gap-2 font-bold";
-                icon.className = "fas fa-lock text-orange-400";
+                badge.className = "px-3 py-2 bg-nlc-orange/20 border border-nlc-orange/50 rounded-lg text-xs font-mono text-nlc-orange flex items-center gap-2 font-bold transition-colors";
+                icon.className = "fas fa-lock text-nlc-orange";
                 status.innerText = "Lock: Active";
             } else {
-                badge.className = "px-3 py-2 bg-[#0a0e0c] border border-[#23362a] rounded-lg text-xs mono text-zinc-500 flex items-center gap-2";
+                badge.className = "px-3 py-2 bg-nlc-base border border-nlc-border rounded-lg text-xs font-mono text-zinc-500 flex items-center gap-2 transition-colors";
                 icon.className = "fas fa-lock-open text-zinc-500";
                 status.innerText = "Lock: Off";
             }
@@ -523,7 +440,7 @@
             }
         });
 
-        // HAPTICS & AUDIO (Zero Friction)
+        // --- HAPTICS & AUDIO ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
         function playTone(freq = 440, duration = 0.15, type = 'sine') {
@@ -543,12 +460,10 @@
         }
 
         function triggerHaptic(pattern) {
-            if (navigator.vibrate) {
-                navigator.vibrate(pattern);
-            }
+            if (navigator.vibrate) navigator.vibrate(pattern);
         }
 
-        // UI DOM ELEMENTS
+        // --- UI DOM ELEMENTS ---
         const timerRing = document.getElementById('timer-ring');
         const timerDisplay = document.getElementById('timer-display');
         const timerSublabel = document.getElementById('timer-sublabel');
@@ -561,168 +476,194 @@
         const rampBar = document.getElementById('ramp-bar');
         const rampPct = document.getElementById('ramp-pct');
         const mainActionBtn = document.getElementById('main-action-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const panelGlow = document.getElementById('panel-glow');
 
-        const RING_CIRCUMFERENCE = 263.89;
+        const RING_CIRCUMFERENCE = 289.02;
 
         function setRingProgress(percent) {
             const offset = RING_CIRCUMFERENCE - (percent / 100 * RING_CIRCUMFERENCE);
             timerRing.style.strokeDashoffset = offset;
         }
 
-        // JOINT SELECTION
+        function setGlowColor(colorClass) {
+            panelGlow.className = `absolute -top-32 -left-32 w-64 h-64 rounded-full mix-blend-screen filter blur-[100px] opacity-20 transition-colors duration-1000 ${colorClass}`;
+        }
+
+        // --- TOGGLE OVERLAY ---
+        function toggleSuggestions() {
+            const tab = document.getElementById('floating-tab');
+            const overlay = document.getElementById('modal-overlay');
+            if (tab.classList.contains('tab-hidden')) {
+                tab.classList.remove('tab-hidden');
+                overlay.classList.remove('hidden');
+            } else {
+                tab.classList.add('tab-hidden');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // --- JOINT SELECTION & MAIN ACTION ---
         function selectJoint(jointId) {
             if (currentPhase !== 'idle') stopCoach();
-
+            
             document.querySelectorAll('.joint-card').forEach(c => c.classList.remove('active-joint'));
             document.getElementById(`card-${jointId}`).classList.add('active-joint');
-
+            
             selectedJoint = PROTOCOLS[jointId];
             currentJointIndex = JOINT_ORDER.indexOf(jointId);
-            targetJointLabel.innerText = selectedJoint.name;
+            targetJointLabel.innerText = `${selectedJoint.name} Selected`;
             
-            instructionTitle.innerText = `${selectedJoint.name} Selected`;
-            instructionBody.innerHTML = `Click <strong class="text-white">"Start Sequence"</strong> to begin the recovery protocol.`;
-            timerDisplay.innerText = '00';
-            timerSublabel.innerText = 'STATUS';
-            setRingProgress(0);
+            instructionTitle.innerText = `Localized Recovery`;
+            instructionBody.innerHTML = `You have selected <strong class="text-white">${selectedJoint.name}</strong>. Click "Start Sequence" to perform a localized RPR and targeted ISO Flush.`;
+            
+            resetUI();
         }
 
-        function startFullRoutine() {
-            isAutoSequence = true;
+        function startSweep() {
+            if (currentPhase !== 'idle') stopCoach();
+            isSweepMode = true;
+            sweepSet = 1;
             currentJointIndex = 0;
-            selectJoint(JOINT_ORDER[0]);
-            runRPRPrepPhase();
+            selectedJoint = PROTOCOLS[JOINT_ORDER[0]];
+            
+            document.querySelectorAll('.joint-card').forEach(c => c.classList.remove('active-joint'));
+            document.getElementById(`card-ankles`).classList.add('active-joint');
+            targetJointLabel.innerText = `Full Body Sweep Active`;
+
+            runGlobalRPRPrep();
         }
 
-        // MAIN BUTTON ACTION HANDLER (MANUAL GATING)
         function handleMainAction() {
             triggerHaptic(50);
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             
             switch (currentPhase) {
                 case 'idle':
-                    isAutoSequence = false;
-                    runRPRPrepPhase();
+                    isSweepMode = false;
+                    runLocalRPRPrep();
                     break;
-                case 'rpr_prep':
-                    runRPRTimer();
-                    break;
+                case 'global_rpr_prep':
+                    runGlobalRPRTimer(); break;
+                case 'local_rpr_prep':
+                    runLocalRPRTimer(); break;
                 case 'iso_prep':
                 case 'next_set_prep':
-                    runGetReadyCountdown();
-                    break;
+                case 'sweep_next_prep':
+                    runGetReadyCountdown(); break;
                 case 'vagal_prep':
-                    runVagalTimer();
-                    break;
-                case 'joint_complete':
-                    if (isAutoSequence && currentJointIndex < JOINT_ORDER.length - 1) {
-                        currentJointIndex++;
-                        selectJoint(JOINT_ORDER[currentJointIndex]);
-                        runRPRPrepPhase();
-                    } else {
-                        finishProtocol();
-                    }
-                    break;
-                case 'rpr_timer':
+                    runVagalTimer(); break;
+                case 'complete':
+                    stopCoach(); break;
+                case 'global_rpr_timer':
+                case 'local_rpr_timer':
                 case 'get_ready':
                 case 'ramp':
                 case 'iso_lock':
                 case 'iso_hold':
                 case 'vagal_timer':
-                    // These are auto-advancing phases. Button acts as emergency stop.
-                    stopCoach();
+                    // Auto advancing. Button acts as emergency stop or ignore.
                     break;
             }
         }
 
         // --- STATE MACHINE ---
 
-        // PHASE 1: RPR PREP (Manual Gate)
-        function runRPRPrepPhase() {
+        function runGlobalRPRPrep() {
             requestWakeLock();
-            currentSet = 1;
-            currentPhase = 'rpr_prep';
+            currentPhase = 'global_rpr_prep';
+            setGlowColor('bg-nlc-orange');
             
-            phaseBadge.innerText = 'STEP 1: RPR INSTRUCTIONS';
-            phaseBadge.className = 'px-2.5 py-1 bg-orange-500/20 border border-orange-500/50 text-orange-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            phaseBadge.innerText = 'SWEEP STEP 1: GLOBAL RPR';
+            phaseBadge.className = 'px-2.5 py-1 bg-nlc-orange/20 border border-nlc-orange/50 text-nlc-orange font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
             
-            stepBadge.classList.remove('hidden');
-            stepBadge.innerText = '1/3';
-
+            stopBtn.classList.remove('hidden');
             rampContainer.classList.add('hidden');
 
-            const p = selectedJoint.rpr;
-            instructionTitle.innerText = `SCRUB THIS AREA`;
-            instructionBody.innerHTML = `<strong class="text-white">${p.title}:</strong><br/>${p.desc}<br><br><span class="text-orange-400 text-sm">Take your time to locate the spot. Click the button below when ready to start the 15s timer.</span>`;
+            instructionTitle.innerText = `Full-Body Wake-Up`;
+            instructionBody.innerHTML = `Spend 2 minutes vigorously scrubbing all neuro-lymphatic points (Jawline, Clavicle, Ribs, Psoas, Tibia) to globally open the pathways.<br><br><span class="text-nlc-orange text-sm">Click below when ready to start 120s timer.</span>`;
 
             timerDisplay.innerText = 'RPR';
             timerSublabel.innerText = 'READY';
             setRingProgress(100);
 
-            mainActionBtn.innerHTML = '<i class="fas fa-play"></i> START 15s RPR TIMER';
-            mainActionBtn.className = 'px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition w-full md:w-auto justify-center btn-glow';
+            mainActionBtn.innerHTML = '<i class="fas fa-play"></i> Start 120s Timer';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-nlc-orange to-nlc-darkorange text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
         }
 
-        // PHASE 1B: RPR TIMER
-        function runRPRTimer() {
-            currentPhase = 'rpr_timer';
-            phaseBadge.innerText = 'PHASE 1: RPR TIMER';
-            
-            mainActionBtn.innerHTML = '<i class="fas fa-square"></i> STOP';
-            mainActionBtn.className = 'px-8 py-4 bg-zinc-800 text-zinc-400 font-black uppercase text-sm rounded-xl tracking-wider flex items-center gap-2 transition w-full md:w-auto justify-center';
+        function runLocalRPRPrep() {
+            requestWakeLock();
+            currentPhase = 'local_rpr_prep';
+            currentSet = 1;
+            setGlowColor('bg-nlc-orange');
 
-            let timeRemaining = selectedJoint.rpr.duration;
-            timerDisplay.innerText = timeRemaining;
-            timerSublabel.innerText = 'SECONDS';
+            phaseBadge.innerText = 'STEP 1: LOCAL RPR';
+            phaseBadge.className = 'px-2.5 py-1 bg-nlc-orange/20 border border-nlc-orange/50 text-nlc-orange font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            
+            stopBtn.classList.remove('hidden');
+            rampContainer.classList.add('hidden');
+
+            instructionTitle.innerText = `Scrub: ${selectedJoint.rpr}`;
+            instructionBody.innerHTML = `Apply vigorous friction to the designated point to release neurological guarding.<br><br><span class="text-nlc-orange text-sm">Click below to start 15s timer.</span>`;
+
+            timerDisplay.innerText = 'RPR';
+            timerSublabel.innerText = 'READY';
             setRingProgress(100);
-            
-            playTone(300, 0.1);
 
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timeRemaining--;
-                if (timeRemaining >= 0) {
-                    timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
-                    setRingProgress((timeRemaining / selectedJoint.rpr.duration) * 100);
-                }
-
-                if (timeRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    playTone(600, 0.3);
-                    triggerHaptic([100, 50, 100]);
-                    runIsoPrepPhase();
-                }
-            }, 1000);
+            mainActionBtn.innerHTML = '<i class="fas fa-play"></i> Start 15s Timer';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-nlc-orange to-nlc-darkorange text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
         }
 
-        // PHASE 2A: ISO PREP (Manual Gate)
+        function runGlobalRPRTimer() {
+            currentPhase = 'global_rpr_timer';
+            let duration = 120;
+            executeTimer(duration, 'SECONDS', () => {
+                triggerHaptic([100, 50, 100]);
+                runIsoPrepPhase();
+            });
+        }
+
+        function runLocalRPRTimer() {
+            currentPhase = 'local_rpr_timer';
+            let duration = 15;
+            executeTimer(duration, 'SECONDS', () => {
+                triggerHaptic([100, 50, 100]);
+                runIsoPrepPhase();
+            });
+        }
+
         function runIsoPrepPhase() {
-            currentPhase = 'iso_prep';
-            phaseBadge.innerText = 'RPR COMPLETE. PREP ISO.';
-            phaseBadge.className = 'px-2.5 py-1 bg-amber-500/20 border border-amber-500/50 text-amber-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            currentPhase = isSweepMode ? 'sweep_next_prep' : 'iso_prep';
+            setGlowColor('bg-amber-500');
 
-            const p = selectedJoint.iso;
-            const setLabel = p.setLabels[currentSet - 1];
+            phaseBadge.innerText = isSweepMode ? `SWEEP ${sweepSet} - PREP` : 'RPR COMPLETE - PREP ISO';
+            phaseBadge.className = 'px-2.5 py-1 bg-amber-500/20 border border-amber-500/50 text-amber-400 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+
+            const activeSet = isSweepMode ? sweepSet : currentSet;
+            const setLabel = selectedJoint.setLabels[activeSet - 1];
+            const holdDur = jointDurations[selectedJoint.id];
             
-            stepBadge.innerText = `STEP 2/3 (Set ${currentSet}/${p.sets})`;
-
-            instructionTitle.innerText = `POSITION: ${setLabel}`;
-            instructionBody.innerHTML = `<strong class="text-white">${p.title}</strong><br/>${p.desc}<br><br><span class="text-orange-400 text-sm">Get into position for the <strong>${setLabel}</strong>. Click below when physically ready.</span>`;
+            instructionTitle.innerText = `${selectedJoint.name} - ${setLabel}`;
+            instructionBody.innerHTML = `<strong class="text-white">${selectedJoint.subtitle}</strong><br/>${selectedJoint.desc}<br><br><span class="text-amber-400 text-sm">Get in position for a <strong>${holdDur}s Hold</strong>. Click when physically ready.</span>`;
 
             timerDisplay.innerText = 'ISO';
             timerSublabel.innerText = 'SETUP';
             setRingProgress(100);
 
-            mainActionBtn.innerHTML = `<i class="fas fa-arrow-right"></i> START SET 1: ${setLabel.toUpperCase()}`;
-            mainActionBtn.className = 'px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition w-full md:w-auto justify-center btn-glow';
+            mainActionBtn.innerHTML = `<i class="fas fa-arrow-right"></i> START: ${setLabel.toUpperCase()}`;
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
+            
+            // Highlight current in grid
+            document.querySelectorAll('.joint-card').forEach(c => c.classList.remove('active-joint'));
+            document.getElementById(`card-${selectedJoint.id}`).classList.add('active-joint');
         }
 
-        // PHASE 2B: 5-SEC GET READY
         function runGetReadyCountdown() {
             currentPhase = 'get_ready';
             phaseBadge.innerText = 'PREPARING TO RAMP...';
             
             mainActionBtn.innerHTML = '<i class="fas fa-child"></i> GETTING SET...';
-            mainActionBtn.className = 'px-8 py-4 bg-amber-600 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition opacity-90 w-full md:w-auto justify-center pointer-events-none';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-amber-600/50 text-white/50 font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition pointer-events-none';
 
             let secondsLeft = 5;
             timerDisplay.innerText = "05";
@@ -738,7 +679,6 @@
                     playTone(350, 0.08);
                     triggerHaptic(50);
                 }
-
                 if (secondsLeft <= 0) {
                     clearInterval(timerInterval);
                     runRampPhase();
@@ -746,17 +686,16 @@
             }, 1000);
         }
 
-        // PHASE 2C: FORCE RAMP
         function runRampPhase() {
             currentPhase = 'ramp';
-            phaseBadge.innerText = 'PHASE 2: 5s FORCE RAMP';
+            phaseBadge.innerText = '5s FORCE RAMP';
             
             rampContainer.classList.remove('hidden');
             instructionTitle.innerText = `SMOOTH FORCE RAMP`;
             instructionBody.innerHTML = `Do not jerk! Slowly ramp your push force up over 5 seconds to <strong class="text-white">40% effort</strong>.`;
 
             let elapsed = 0;
-            const totalMs = selectedJoint.iso.rampDuration * 1000;
+            const totalMs = 5000;
             const intervalMs = 50;
 
             timerDisplay.innerText = "05";
@@ -785,11 +724,11 @@
             }, intervalMs);
         }
 
-        // PHASE 2D: ISO LOCK (1 SEC PAUSE)
         function runISOLockPhase() {
             currentPhase = 'iso_lock';
+            setGlowColor('bg-emerald-500');
             phaseBadge.innerText = 'TARGET FORCE REACHED';
-            phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
 
             playTone(528, 0.2);
             triggerHaptic([100, 50, 100]);
@@ -807,16 +746,16 @@
             }, 1000);
         }
 
-        // PHASE 2E: ISO HOLD TIMER
         function runISOHoldPhase() {
             currentPhase = 'iso_hold';
-            phaseBadge.innerText = 'PHASE 2: ISO HOLD';
+            phaseBadge.innerText = 'HOLD TENSION';
             
-            const p = selectedJoint.iso;
-            instructionTitle.innerText = `HOLD TENSION NOW`;
-            instructionBody.innerHTML = `Hold steady pressure. Physically squeeze out fluid and inflammation. Breathe normally.`;
+            instructionTitle.innerText = `HOLD AND BREATHE`;
+            instructionBody.innerHTML = `Hold steady pressure. Mechanically squeeze out fluid and inflammation. Breathe normally.`;
 
-            let timeRemaining = p.holdDuration;
+            let holdDuration = jointDurations[selectedJoint.id];
+            let timeRemaining = holdDuration;
+            
             timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
             timerSublabel.innerText = 'HOLDING';
             setRingProgress(100);
@@ -826,7 +765,7 @@
                 timeRemaining--;
                 if (timeRemaining >= 0) {
                     timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
-                    setRingProgress((timeRemaining / p.holdDuration) * 100);
+                    setRingProgress((timeRemaining / holdDuration) * 100);
                 }
 
                 if (timeRemaining <= 3 && timeRemaining > 0) {
@@ -837,162 +776,164 @@
                 if (timeRemaining <= 0) {
                     clearInterval(timerInterval);
                     playTone(880, 0.4, 'sine');
-                    triggerHaptic([200, 100, 200, 100, 400]); // Long success haptic
+                    triggerHaptic([200, 100, 200, 100, 400]); 
+                    
+                    rampContainer.classList.add('hidden');
+                    rampBar.style.width = `0%`;
+                    rampPct.innerText = `0%`;
 
-                    if (currentSet < p.sets) {
-                        currentSet++;
-                        runNextSetPrepPhase();
-                    } else {
-                        runVagalPrepPhase();
-                    }
+                    handlePostHoldRouting();
                 }
             }, 1000);
         }
 
-        // PHASE 2F: NEXT SET PREP (Manual Gate)
-        function runNextSetPrepPhase() {
+        function handlePostHoldRouting() {
+            if (isSweepMode) {
+                currentJointIndex++;
+                if (currentJointIndex >= JOINT_ORDER.length) {
+                    currentJointIndex = 0;
+                    sweepSet++;
+                }
+
+                if (sweepSet > 2) {
+                    runVagalPrepPhase();
+                } else {
+                    selectedJoint = PROTOCOLS[JOINT_ORDER[currentJointIndex]];
+                    runIsoPrepPhase(); // Prep next joint in sweep
+                }
+            } else {
+                if (currentSet < selectedJoint.sets) {
+                    currentSet++;
+                    runNextSetPrepPhaseLocal();
+                } else {
+                    runVagalPrepPhase();
+                }
+            }
+        }
+
+        function runNextSetPrepPhaseLocal() {
             currentPhase = 'next_set_prep';
-            phaseBadge.innerText = `SET ${currentSet-1} COMPLETE`;
-            phaseBadge.className = 'px-2.5 py-1 bg-amber-500/20 border border-amber-500/50 text-amber-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            setGlowColor('bg-amber-500');
+            phaseBadge.innerText = `REST & SWITCH SIDES`;
+            phaseBadge.className = 'px-2.5 py-1 bg-amber-500/20 border border-amber-500/50 text-amber-400 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
 
-            rampContainer.classList.add('hidden');
-            
-            const p = selectedJoint.iso;
-            const setLabel = p.setLabels[currentSet - 1];
-            
-            stepBadge.innerText = `STEP 2/3 (Set ${currentSet}/${p.sets})`;
+            const setLabel = selectedJoint.setLabels[currentSet - 1];
 
-            instructionTitle.innerText = `Release & Switch Sides`;
-            instructionBody.innerHTML = `Slowly release tension. Shake out the joint. <br><br>Get into position for <strong>${setLabel}</strong>. Click below when physically ready.`;
+            instructionTitle.innerText = `Sponge Refill`;
+            instructionBody.innerHTML = `Slowly release tension. Shake out the joint. Rest 2-3 minutes to allow arterial blood to return.<br><br>Get into position for <strong>${setLabel}</strong>. Click below when physically ready.`;
 
             timerDisplay.innerText = 'REST';
-            timerSublabel.innerText = 'SWITCH';
+            timerSublabel.innerText = 'REFILL';
             setRingProgress(100);
 
             mainActionBtn.innerHTML = `<i class="fas fa-arrow-right"></i> START SET ${currentSet}: ${setLabel.toUpperCase()}`;
-            mainActionBtn.className = 'px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition w-full md:w-auto justify-center btn-glow';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
         }
 
-        // PHASE 3A: VAGAL PREP (Manual Gate)
         function runVagalPrepPhase() {
             currentPhase = 'vagal_prep';
-            phaseBadge.innerText = 'ISO HOLDS COMPLETE';
-            phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            setGlowColor('bg-blue-500');
+            phaseBadge.innerText = 'ISO FLUSH COMPLETE';
+            phaseBadge.className = 'px-2.5 py-1 bg-blue-500/20 border border-blue-500/50 text-blue-400 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
 
-            rampContainer.classList.add('hidden');
-            stepBadge.innerText = 'STEP 3/3';
-
-            const p = selectedJoint.vagal;
-            instructionTitle.innerText = `Prepare for Breathing`;
-            instructionBody.innerHTML = `Isometric holds complete. Joint capsule flushed.<br><br>Relax your body completely. Click below to begin the parasympathetic breathing timer.`;
+            instructionTitle.innerText = `Prepare for Vagal Reset`;
+            instructionBody.innerHTML = `Joint capsule(s) successfully flushed.<br><br>Lie on your back. Click below to begin the parasympathetic shift. Perform slow, continuous leak exhales.`;
 
             timerDisplay.innerText = 'READY';
             timerSublabel.innerText = 'BREATHWORK';
             setRingProgress(100);
 
             mainActionBtn.innerHTML = '<i class="fas fa-wind"></i> START VAGAL BREATHING';
-            mainActionBtn.className = 'px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition w-full md:w-auto justify-center btn-glow';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
         }
 
-        // PHASE 3B: VAGAL TIMER
         function runVagalTimer() {
             currentPhase = 'vagal_timer';
-            phaseBadge.innerText = 'PHASE 3: VAGAL SHIFT';
+            phaseBadge.innerText = 'PHASE: VAGAL SHIFT';
             
-            mainActionBtn.innerHTML = '<i class="fas fa-square"></i> STOP';
-            mainActionBtn.className = 'px-8 py-4 bg-zinc-800 text-zinc-400 font-black uppercase text-sm rounded-xl tracking-wider flex items-center gap-2 transition w-full md:w-auto justify-center';
+            instructionTitle.innerText = 'Autonomic Down-Regulation';
+            instructionBody.innerHTML = `<strong>Deep nasal inhale, followed by a long, continuous slow-leak exhale to failure.</strong>`;
 
-            const p = selectedJoint.vagal;
-            instructionTitle.innerText = p.title;
-            instructionBody.innerHTML = `<strong>${p.desc}</strong>`;
+            let duration = 60; // 1 min guided, though they can go longer
+            executeTimer(duration, 'EXHALING', () => {
+                triggerHaptic([100, 50, 100, 50, 300]);
+                playTone(1000, 0.4);
+                runCompletePhase();
+            });
+        }
 
-            let timeRemaining = p.duration;
-            timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
-            timerSublabel.innerText = 'EXHALING';
+        function runCompletePhase() {
+            currentPhase = 'complete';
+            setGlowColor('bg-nlc-base');
+            releaseWakeLock();
+
+            phaseBadge.innerText = 'RECOVERY COMPLETE';
+            phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+
+            timerDisplay.innerText = 'DONE';
+            timerSublabel.innerText = 'RECOVERED';
             setRingProgress(100);
+
+            instructionTitle.innerText = 'Protocol Complete';
+            instructionBody.innerHTML = 'Fluid and metabolic waste flushed. Parasympathetic nervous system engaged. Proceed to sleep or active recovery.';
+
+            mainActionBtn.innerHTML = '<i class="fas fa-redo"></i> Restart Sequence';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-zinc-800 hover:bg-zinc-700 text-white font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition';
+            stopBtn.classList.add('hidden');
+        }
+
+        function executeTimer(duration, sublabel, callback) {
+            mainActionBtn.innerHTML = '<i class="fas fa-square"></i> STOP';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-zinc-800/50 text-zinc-500 font-black uppercase text-sm rounded-xl tracking-wider flex items-center justify-center gap-2 transition pointer-events-none';
+
+            let timeRemaining = duration;
+            timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
+            timerSublabel.innerText = sublabel;
+            setRingProgress(100);
+            
+            playTone(300, 0.1);
 
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
                 timeRemaining--;
                 if (timeRemaining >= 0) {
                     timerDisplay.innerText = timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining;
-                    setRingProgress((timeRemaining / p.duration) * 100);
+                    setRingProgress((timeRemaining / duration) * 100);
                 }
-
                 if (timeRemaining <= 0) {
                     clearInterval(timerInterval);
-                    playTone(1000, 0.4);
-                    triggerHaptic([100, 50, 100, 50, 300]);
-                    runJointCompletePhase();
+                    if (callback) callback();
                 }
             }, 1000);
         }
 
-        // PHASE 4: JOINT COMPLETE (Manual Gate)
-        function runJointCompletePhase() {
-            currentPhase = 'joint_complete';
+        function resetUI() {
+            phaseBadge.innerText = 'STANDBY MODE';
+            phaseBadge.className = 'px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-zinc-300 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
             
-            phaseBadge.innerText = 'JOINT FLUSH COMPLETE';
-            phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
-
-            timerDisplay.innerText = 'DONE';
-            timerSublabel.innerText = 'RECOVERED';
-
-            if (isAutoSequence && currentJointIndex < JOINT_ORDER.length - 1) {
-                const nextJointName = PROTOCOLS[JOINT_ORDER[currentJointIndex + 1]].name;
-                instructionTitle.innerText = `${selectedJoint.name} Complete`;
-                instructionBody.innerHTML = `Great work. The next target is <strong class="text-orange-400">${nextJointName}</strong>. Click below when ready to proceed.`;
-                
-                mainActionBtn.innerHTML = `<i class="fas fa-forward"></i> CONTINUE TO ${nextJointName.toUpperCase()}`;
-                mainActionBtn.className = 'px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition w-full md:w-auto justify-center btn-glow';
-            } else {
-                finishProtocol();
-            }
-        }
-
-        function finishProtocol() {
-            currentPhase = 'idle';
-            releaseWakeLock();
-
-            phaseBadge.innerText = 'ALL ZONES COMPLETED';
-            phaseBadge.className = 'px-2.5 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            timerDisplay.innerText = '00';
+            timerSublabel.innerText = 'STATUS';
+            setRingProgress(0);
+            setGlowColor('bg-nlc-orange');
+            rampContainer.classList.add('hidden');
+            stopBtn.classList.add('hidden');
             
-            stepBadge.classList.add('hidden');
-            
-            mainActionBtn.innerHTML = '<i class="fas fa-redo"></i> Restart Sequence';
-            mainActionBtn.className = 'px-8 py-4 bg-zinc-800 hover:bg-zinc-700 text-white font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition w-full md:w-auto justify-center';
-
-            timerDisplay.innerText = 'DONE';
-            timerSublabel.innerText = 'RECOVERED';
-
-            instructionTitle.innerText = 'Sequence Complete';
-            instructionBody.innerHTML = 'Fluid and metabolic waste flushed. Parasympathetic nervous system engaged. Proceed to sleep or active recovery.';
+            mainActionBtn.innerHTML = '<i class="fas fa-play"></i> Start Sequence';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-nlc-orange hover:bg-orange-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
         }
 
         function stopCoach() {
             clearInterval(timerInterval);
             releaseWakeLock();
-            
             currentPhase = 'idle';
-            phaseBadge.innerText = 'STANDBY MODE';
-            phaseBadge.className = 'px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-zinc-300 mono text-[10px] uppercase tracking-widest rounded-md font-bold';
-            
-            stepBadge.classList.add('hidden');
-            rampContainer.classList.add('hidden');
-            
-            mainActionBtn.innerHTML = '<i class="fas fa-play"></i> Start Sequence';
-            mainActionBtn.className = 'px-8 py-4 bg-orange-500 hover:bg-orange-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center gap-2 transition w-full md:w-auto justify-center';
-
-            instructionTitle.innerText = `${selectedJoint.name} Selected`;
-            instructionBody.innerHTML = `Click <strong class="text-white">"Start Sequence"</strong> to begin the recovery protocol.`;
-
-            timerDisplay.innerText = '00';
-            timerSublabel.innerText = 'STATUS';
-            setRingProgress(0);
+            isSweepMode = false;
+            selectJoint('ankles'); // Reset to default state
         }
 
-        // INITIALIZE APP
-        selectJoint('ankles');
+        // INITIALIZE
+        renderJointGrid();
+        resetUI();
+
     </script>
 </body>
 </html>
