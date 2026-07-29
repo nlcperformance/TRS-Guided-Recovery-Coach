@@ -16,13 +16,13 @@
                 extend: {
                     colors: {
                         nlc: {
-                            orange: '#FF851B',
+                            orange: '#FF9E4D', // Refined lighter orange
                             darkorange: '#D35400',
-                            base: '#0a0e0c',
-                            panel: '#121c16',
-                            border: '#23362a',
+                            base: '#000000', // Pure black
+                            panel: '#0a0a0a', // Glassy dark
+                            border: '#1f1f1f', // Neutral dark border
                             white: '#FFFFFF',
-                            gray: '#5c7a65'
+                            gray: '#71717a' // Neutral gray
                         }
                     },
                     fontFamily: {
@@ -30,8 +30,8 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     boxShadow: {
-                        'neon-orange': '0 0 20px rgba(255, 133, 27, 0.4)',
-                        'neon-emerald': '0 0 20px rgba(16, 185, 129, 0.4)',
+                        'neon-orange': '0 0 20px rgba(255, 133, 27, 0.3)',
+                        'neon-emerald': '0 0 20px rgba(16, 185, 129, 0.3)',
                         'neon-white': '0 0 20px rgba(255, 255, 255, 0.15)',
                     }
                 }
@@ -40,30 +40,36 @@
     </script>
     <style>
         body {
-            background-color: #0a0e0c;
+            background-color: #000000;
             color: #e5e5e5;
             overflow-x: hidden;
+            transition: background-color 0.8s ease;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
         }
 
         .timer-text {
             font-variant-numeric: tabular-nums;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.9);
         }
 
+        /* Tight, Sophisticated Premium Gradient */
         .text-gradient-orange {
-            background: linear-gradient(to bottom, #FFDEB3 0%, #FF851B 40%, #D35400 75%, #4A1500 100%);
+            background: linear-gradient(to bottom, #FF9E4D 0%, #D35400 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            color: transparent;
         }
 
+        /* True Smoked Glassmorphism */
         .glass-panel {
-            background: rgba(18, 28, 22, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(35, 54, 42, 0.8);
+            background: rgba(10, 10, 10, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         /* Animated Progress Ring */
@@ -79,29 +85,29 @@
 
         .joint-card {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(18, 28, 22, 0.4);
-            border: 1px solid var(--tw-colors-nlc-border);
+            background: rgba(20, 20, 20, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .joint-card:hover {
             border-color: var(--tw-colors-nlc-orange);
-            background: rgba(255, 133, 27, 0.05);
+            background: rgba(255, 158, 77, 0.05);
         }
 
         .joint-card.active-joint {
             border-color: var(--tw-colors-nlc-orange);
-            background: rgba(255, 133, 27, 0.12);
-            box-shadow: 0 0 15px rgba(255, 133, 27, 0.15);
+            background: rgba(255, 158, 77, 0.1);
+            box-shadow: 0 0 15px rgba(255, 158, 77, 0.15);
         }
 
         .btn-glow {
-            box-shadow: 0 0 20px rgba(255, 133, 27, 0.4);
+            box-shadow: 0 0 20px rgba(255, 158, 77, 0.3);
             animation: pulse-glow 2.5s infinite;
         }
 
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(255, 133, 27, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(255, 133, 27, 0.7); }
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 158, 77, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(255, 158, 77, 0.5); }
         }
 
         ::-webkit-scrollbar { display: none; }
@@ -113,11 +119,12 @@
 <body class="min-h-screen flex flex-col justify-between font-sans antialiased selection:bg-nlc-orange" id="app-body">
 
     <!-- Header -->
-    <header class="p-6 z-10 relative flex flex-col items-center justify-center border-b border-nlc-border bg-nlc-base/80 backdrop-blur-md shrink-0">
+    <header class="p-6 z-10 relative flex flex-col items-center justify-center border-b border-white/5 bg-black/50 backdrop-blur-xl shrink-0">
         <div class="flex items-center space-x-3 mb-4">
-            <img src="nlcpWHITE.png" alt="NLC Logo" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-nlc-orange shadow-[0_0_10px_rgba(255,133,27,0.3)] object-cover bg-white" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23FF851B\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%230a0e0c\' stroke=\'%23FF851B\' stroke-width=\'4\'/><text x=\'50\' y=\'55\' font-size=\'20\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%23fff\'>NLC</text></svg>';">
+            <img src="nlcpWHITE.png" alt="NLC Logo" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-nlc-orange shadow-[0_0_10px_rgba(255,158,77,0.3)] object-cover bg-white" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23FF851B\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%230a0e0c\' stroke=\'%23FF851B\' stroke-width=\'4\'/><text x=\'50\' y=\'55\' font-size=\'20\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%23fff\'>NLC</text></svg>';">
             <div>
-                <h1 class="text-2xl md:text-3xl font-black uppercase text-white drop-shadow-md leading-none" style="letter-spacing: -0.1em;">
+                <!-- Tightly kerned myTRScoach with refined gradient -->
+                <h1 class="text-2xl md:text-3xl font-black uppercase text-white drop-shadow-lg leading-none" style="letter-spacing: -0.1em;">
                     my<span class="text-gradient-orange relative z-10" style="margin: 0 -0.12em;">TRS</span>coach
                 </h1>
                 <p class="text-[10px] md:text-xs text-nlc-gray font-bold tracking-[0.15em] mt-1 uppercase">NLC Performance // Post-Combat Recovery</p>
@@ -126,15 +133,15 @@
 
         <!-- Global Controls -->
         <div class="flex flex-wrap items-center gap-3 justify-center">
-            <span id="screen-lock-badge" class="px-3 py-2 bg-nlc-base border border-nlc-border rounded-lg text-xs font-mono text-zinc-500 flex items-center gap-2 transition-colors">
+            <span id="screen-lock-badge" class="px-3 py-2 bg-black border border-white/10 rounded-lg text-xs font-mono text-zinc-500 flex items-center gap-2 transition-colors">
                 <i id="lock-icon" class="fas fa-lock-open text-zinc-500"></i>
                 <span id="lock-status">Lock: Off</span>
             </span>
-            <span class="px-3 py-2 bg-nlc-base border border-nlc-border rounded-lg text-xs font-mono text-zinc-400 flex items-center gap-2">
+            <span class="px-3 py-2 bg-black border border-white/10 rounded-lg text-xs font-mono text-zinc-400 flex items-center gap-2">
                 <i class="fas fa-mobile-alt text-nlc-orange"></i>
                 <span>Haptics Active</span>
             </span>
-            <button onclick="startSweep()" class="px-5 py-2.5 bg-gradient-to-r from-nlc-orange to-nlc-darkorange hover:from-orange-400 hover:to-nlc-orange text-black font-black uppercase tracking-wider text-xs rounded-lg shadow-neon-orange flex items-center gap-2 transition">
+            <button onclick="startSweep()" class="px-5 py-2.5 bg-nlc-orange hover:bg-nlc-darkorange text-black font-black uppercase tracking-wider text-xs rounded-lg shadow-neon-orange flex items-center gap-2 transition">
                 <i class="fas fa-bolt"></i> Execute Sweep x2
             </button>
         </div>
@@ -144,15 +151,15 @@
     <main class="flex-1 w-full max-w-6xl mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 z-10">
         
         <!-- LEFT: ACTIVE COACHING CONSOLE -->
-        <div class="lg:col-span-7 glass-panel p-5 md:p-8 rounded-2xl shadow-2xl flex flex-col relative overflow-hidden h-full">
+        <div class="lg:col-span-7 glass-panel p-5 md:p-8 rounded-2xl flex flex-col relative overflow-hidden h-full">
             
             <!-- Glow Effect -->
             <div id="panel-glow" class="absolute -top-32 -left-32 w-64 h-64 bg-nlc-orange rounded-full mix-blend-screen filter blur-[100px] opacity-20 transition-colors duration-1000"></div>
 
             <!-- Status Banner -->
-            <div class="flex justify-between items-center border-b border-nlc-border pb-4 mb-4 shrink-0 relative z-10">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-4 shrink-0 relative z-10">
                 <div class="flex items-center space-x-2">
-                    <span id="phase-badge" class="px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-zinc-300 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold">
+                    <span id="phase-badge" class="px-2.5 py-1 bg-zinc-900 border border-white/10 text-zinc-300 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold">
                         STANDBY MODE
                     </span>
                     <span id="step-badge" class="px-2.5 py-1 bg-nlc-orange/10 border border-nlc-orange/30 text-nlc-orange font-mono text-[10px] uppercase tracking-widest rounded-md font-bold hidden">
@@ -168,7 +175,7 @@
             <div class="flex flex-col items-center justify-center flex-1 py-4 relative z-10">
                 <div class="relative w-56 h-56 md:w-64 md:h-64 flex items-center justify-center">
                     <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                        <circle class="text-nlc-base" stroke-width="4" stroke="currentColor" fill="transparent" r="46" cx="50" cy="50"/>
+                        <circle class="text-white/5" stroke-width="4" stroke="currentColor" fill="transparent" r="46" cx="50" cy="50"/>
                         <circle id="timer-ring" class="text-nlc-orange transition-all duration-1000 ease-linear" stroke-width="6" stroke-dasharray="289.02" stroke-dashoffset="289.02" stroke-linecap="round" stroke="currentColor" fill="transparent" r="46" cx="50" cy="50"/>
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
@@ -178,19 +185,19 @@
                 </div>
 
                 <!-- Ramp Bar -->
-                <div id="ramp-container" class="w-full max-w-sm mt-6 bg-nlc-base border border-nlc-border rounded-xl p-3 hidden">
+                <div id="ramp-container" class="w-full max-w-sm mt-6 bg-black/60 border border-white/10 rounded-xl p-3 hidden">
                     <div class="flex justify-between items-center text-[10px] font-mono mb-1.5">
                         <span class="text-nlc-orange font-bold uppercase tracking-wider"><i class="fas fa-tachometer-alt mr-1"></i> Force Ramp</span>
                         <span id="ramp-pct" class="text-zinc-400 font-bold">0%</span>
                     </div>
                     <div class="w-full bg-zinc-900 rounded-full h-2.5 overflow-hidden shadow-inner">
-                        <div id="ramp-bar" class="ramp-bar bg-gradient-to-r from-emerald-500 via-amber-500 to-nlc-orange h-full w-0 rounded-full"></div>
+                        <div id="ramp-bar" class="ramp-bar bg-gradient-to-r from-white via-zinc-400 to-nlc-orange h-full w-0 rounded-full"></div>
                     </div>
                 </div>
             </div>
 
             <!-- INSTRUCTION CARD -->
-            <div class="bg-gradient-to-b from-nlc-base to-black p-5 rounded-xl border-l-4 border-nlc-orange border-y border-r border-nlc-border relative z-10 shrink-0 mt-4 mb-6 shadow-lg">
+            <div class="bg-black/60 p-5 rounded-xl border-l-4 border-nlc-orange border border-white/5 relative z-10 shrink-0 mt-4 mb-6 shadow-lg">
                 <h3 id="instruction-title" class="text-nlc-orange font-black text-lg uppercase tracking-wide mb-2">
                     Ready to Begin
                 </h3>
@@ -201,7 +208,7 @@
 
             <!-- ACTION BUTTONS -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3 shrink-0 z-10">
-                <button id="main-action-btn" onclick="handleMainAction()" class="w-full sm:w-auto px-8 py-4 bg-nlc-orange hover:bg-orange-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow">
+                <button id="main-action-btn" onclick="handleMainAction()" class="w-full sm:w-auto px-8 py-4 bg-nlc-orange hover:bg-nlc-darkorange text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-neon-orange flex items-center justify-center gap-2 transition btn-glow">
                     <i class="fas fa-play"></i> Start Sequence
                 </button>
                 <button id="stop-btn" onclick="stopCoach()" class="w-full sm:w-auto px-5 py-4 bg-red-950/30 hover:bg-red-900/50 border border-red-900/50 text-red-400 font-bold uppercase text-xs rounded-xl tracking-wider transition flex items-center justify-center gap-2 hidden">
@@ -222,14 +229,12 @@
 
             <!-- Joint List -->
             <div class="grid grid-cols-1 gap-2.5 overflow-y-auto pr-1 pb-2 flex-1" id="joint-grid">
-                
                 <!-- JS Will Inject Cards Here to Keep HTML Dry -->
-
             </div>
 
             <!-- CLINICAL FOOTER -->
-            <div class="bg-nlc-panel p-4 rounded-xl border border-nlc-border text-xs text-zinc-300 space-y-2 shrink-0 shadow-lg mt-2">
-                <p class="font-black text-white uppercase font-mono text-[10px] tracking-wider border-b border-nlc-border pb-1">Execution Architecture:</p>
+            <div class="bg-black/60 p-4 rounded-xl border border-white/5 text-xs text-zinc-300 space-y-2 shrink-0 shadow-lg mt-2">
+                <p class="font-black text-white uppercase font-mono text-[10px] tracking-wider border-b border-white/10 pb-1">Execution Architecture:</p>
                 <p class="flex items-start"><i class="fas fa-angle-right text-nlc-orange mt-1 mr-2 text-[10px]"></i> <span><strong>Sweep x2:</strong> Flushes all joints circuit-style. Allows optimal 2-3 min "sponge refill" rest while sweeping other zones.</span></p>
                 <p class="flex items-start"><i class="fas fa-angle-right text-nlc-orange mt-1 mr-2 text-[10px]"></i> <span><strong>Zero Stress:</strong> The timers will wait for you. Click the buttons ONLY when you are locked in position.</span></p>
             </div>
@@ -239,33 +244,33 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full text-center py-5 border-t border-nlc-border mt-auto bg-nlc-base/80 backdrop-blur-md z-10 shrink-0">
+    <footer class="w-full text-center py-5 border-t border-white/5 mt-auto bg-black/50 backdrop-blur-xl z-10 shrink-0">
         <p class="font-mono text-xs md:text-sm font-black uppercase tracking-[0.35em] text-gradient-orange">
             Adapt. Recover. Master.
         </p>
     </footer>
 
     <!-- Floating Clinical Notes -->
-    <button onclick="toggleSuggestions()" class="fixed right-0 top-1/3 glass-panel !bg-nlc-panel/90 text-nlc-orange py-6 px-2.5 rounded-l-xl shadow-neon-orange z-40 font-bold tracking-widest flex flex-col items-center space-y-3 border-y border-l border-nlc-orange/50 hover:scale-105 origin-right transition-transform">
+    <button onclick="toggleSuggestions()" class="fixed right-0 top-1/3 glass-panel !bg-black/90 text-nlc-orange py-6 px-2.5 rounded-l-xl shadow-neon-orange z-40 font-bold tracking-widest flex flex-col items-center space-y-3 border-y border-l border-white/10 hover:scale-105 origin-right transition-transform">
         <i class="fas fa-book-medical text-lg"></i>
         <span class="[writing-mode:vertical-rl] transform rotate-180 hidden md:block text-[10px] uppercase font-mono tracking-widest">Protocol Rules</span>
     </button>
 
-    <div id="floating-tab" class="fixed right-0 top-0 h-full w-80 max-w-[85vw] glass-panel !bg-nlc-base/95 !backdrop-blur-2xl border-l border-nlc-orange/30 shadow-2xl z-50 tab-hidden flex flex-col">
-        <div class="p-6 border-b border-nlc-border flex justify-between items-center bg-gradient-to-r from-nlc-panel to-nlc-base">
+    <div id="floating-tab" class="fixed right-0 top-0 h-full w-80 max-w-[85vw] glass-panel !bg-black/95 !backdrop-blur-3xl border-l border-white/10 shadow-2xl z-50 tab-hidden flex flex-col">
+        <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/50">
             <h3 class="text-sm font-black tracking-widest uppercase text-white drop-shadow-md font-mono"><i class="fas fa-clipboard-list text-nlc-orange mr-2"></i> Clinical Notes</h3>
             <button onclick="toggleSuggestions()" class="text-zinc-500 hover:text-white transition-colors">
                 <i class="fas fa-times text-xl"></i>
             </button>
         </div>
         <div class="p-6 space-y-5 overflow-y-auto flex-1">
-            <div class="bg-nlc-panel p-5 rounded-xl border border-nlc-border shadow-inner">
+            <div class="bg-black/60 p-5 rounded-xl border border-white/5 shadow-inner">
                 <h4 class="text-nlc-orange font-black uppercase tracking-widest text-[10px] mb-2">10s Flush vs 30s Rehab</h4>
                 <p class="text-[11px] text-zinc-300 leading-relaxed"><strong class="text-white">10s Flush:</strong> Maintenance dose for healthy joints. Mechanically clears edema and metabolic waste.</p>
                 <p class="text-[11px] text-zinc-300 leading-relaxed mt-2"><strong class="text-white">30s Rehab:</strong> Required for injured or chronically achy joints. The extended tension triggers tenocytes to lay down new collagen.</p>
             </div>
             
-            <div class="bg-nlc-panel p-5 rounded-xl border border-nlc-border shadow-inner">
+            <div class="bg-black/60 p-5 rounded-xl border border-white/5 shadow-inner">
                 <h4 class="text-nlc-orange font-black uppercase tracking-widest text-[10px] mb-2">The Sweep Protocol</h4>
                 <p class="text-[11px] text-zinc-300 leading-relaxed">Performing a full-body sweep is biologically superior. Compressing a tendon squeezes fluid out. Resting 2-3 minutes allows the "vacuum effect" to draw fresh arterial blood back in. Sweeping other joints provides this perfect rest interval organically.</p>
             </div>
@@ -279,7 +284,7 @@
         </div>
     </div>
     
-    <div id="modal-overlay" onclick="toggleSuggestions()" class="fixed inset-0 bg-black/70 z-40 hidden backdrop-blur-sm transition-opacity duration-300"></div>
+    <div id="modal-overlay" onclick="toggleSuggestions()" class="fixed inset-0 bg-black/80 z-40 hidden backdrop-blur-sm transition-opacity duration-300"></div>
 
     <!-- APP LOGIC & STATE MACHINE -->
     <script>
@@ -370,7 +375,7 @@
                 
                 card.innerHTML = `
                     <div class="flex items-start space-x-3 w-full">
-                        <div class="w-8 h-8 rounded-lg bg-nlc-base/50 border border-nlc-border flex items-center justify-center text-nlc-orange shrink-0 mt-1">
+                        <div class="w-8 h-8 rounded-lg bg-black/50 border border-white/5 flex items-center justify-center text-nlc-orange shrink-0 mt-1">
                             <i class="fas ${p.icon} text-sm"></i>
                         </div>
                         <div class="flex-1">
@@ -381,8 +386,8 @@
                             
                             <!-- Toggle Buttons -->
                             <div class="flex items-center gap-1.5 mt-2.5" onclick="event.stopPropagation()">
-                                <button id="btn-10s-${key}" onclick="setDuration('${key}', 10)" class="flex-1 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors ${jointDurations[key] === 10 ? 'bg-nlc-orange text-black' : 'bg-nlc-base text-zinc-400 border border-nlc-border'}">10s Flush</button>
-                                <button id="btn-30s-${key}" onclick="setDuration('${key}', 30)" class="flex-1 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors ${jointDurations[key] === 30 ? 'bg-amber-600 text-black' : 'bg-nlc-base text-zinc-400 border border-nlc-border'}">30s Rehab</button>
+                                <button id="btn-10s-${key}" onclick="setDuration('${key}', 10)" class="flex-1 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors ${jointDurations[key] === 10 ? 'bg-nlc-orange text-black' : 'bg-black/60 text-zinc-400 border border-white/10 hover:border-white/20'}">10s Flush</button>
+                                <button id="btn-30s-${key}" onclick="setDuration('${key}', 30)" class="flex-1 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors ${jointDurations[key] === 30 ? 'bg-[#D35400] text-white' : 'bg-black/60 text-zinc-400 border border-white/10 hover:border-white/20'}">30s Rehab</button>
                             </div>
                         </div>
                     </div>
@@ -424,11 +429,11 @@
             const icon = document.getElementById('lock-icon');
             const status = document.getElementById('lock-status');
             if (isActive) {
-                badge.className = "px-3 py-2 bg-nlc-orange/20 border border-nlc-orange/50 rounded-lg text-xs font-mono text-nlc-orange flex items-center gap-2 font-bold transition-colors";
+                badge.className = "px-3 py-2 bg-nlc-orange/10 border border-nlc-orange/30 rounded-lg text-xs font-mono text-nlc-orange flex items-center gap-2 font-bold transition-colors";
                 icon.className = "fas fa-lock text-nlc-orange";
                 status.innerText = "Lock: Active";
             } else {
-                badge.className = "px-3 py-2 bg-nlc-base border border-nlc-border rounded-lg text-xs font-mono text-zinc-500 flex items-center gap-2 transition-colors";
+                badge.className = "px-3 py-2 bg-black border border-white/10 rounded-lg text-xs font-mono text-zinc-500 flex items-center gap-2 transition-colors";
                 icon.className = "fas fa-lock-open text-zinc-500";
                 status.innerText = "Lock: Off";
             }
@@ -487,6 +492,7 @@
         }
 
         function setGlowColor(colorClass) {
+            // Strip out other background color classes before applying new one
             panelGlow.className = `absolute -top-32 -left-32 w-64 h-64 rounded-full mix-blend-screen filter blur-[100px] opacity-20 transition-colors duration-1000 ${colorClass}`;
         }
 
@@ -572,7 +578,7 @@
         function runGlobalRPRPrep() {
             requestWakeLock();
             currentPhase = 'global_rpr_prep';
-            setGlowColor('bg-nlc-orange');
+            setGlowColor('bg-[#FF9E4D]');
             
             phaseBadge.innerText = 'SWEEP STEP 1: GLOBAL RPR';
             phaseBadge.className = 'px-2.5 py-1 bg-nlc-orange/20 border border-nlc-orange/50 text-nlc-orange font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
@@ -588,14 +594,14 @@
             setRingProgress(100);
 
             mainActionBtn.innerHTML = '<i class="fas fa-play"></i> Start 120s Timer';
-            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-nlc-orange to-nlc-darkorange text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-nlc-orange hover:bg-[#D35400] text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-neon-orange flex items-center justify-center gap-2 transition btn-glow';
         }
 
         function runLocalRPRPrep() {
             requestWakeLock();
             currentPhase = 'local_rpr_prep';
             currentSet = 1;
-            setGlowColor('bg-nlc-orange');
+            setGlowColor('bg-[#FF9E4D]');
 
             phaseBadge.innerText = 'STEP 1: LOCAL RPR';
             phaseBadge.className = 'px-2.5 py-1 bg-nlc-orange/20 border border-nlc-orange/50 text-nlc-orange font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
@@ -611,7 +617,7 @@
             setRingProgress(100);
 
             mainActionBtn.innerHTML = '<i class="fas fa-play"></i> Start 15s Timer';
-            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-nlc-orange to-nlc-darkorange text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-nlc-orange hover:bg-[#D35400] text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-neon-orange flex items-center justify-center gap-2 transition btn-glow';
         }
 
         function runGlobalRPRTimer() {
@@ -651,7 +657,7 @@
             setRingProgress(100);
 
             mainActionBtn.innerHTML = `<i class="fas fa-arrow-right"></i> START: ${setLabel.toUpperCase()}`;
-            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-[0_0_15px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 transition btn-glow';
             
             // Highlight current in grid
             document.querySelectorAll('.joint-card').forEach(c => c.classList.remove('active-joint'));
@@ -827,7 +833,7 @@
             setRingProgress(100);
 
             mainActionBtn.innerHTML = `<i class="fas fa-arrow-right"></i> START SET ${currentSet}: ${setLabel.toUpperCase()}`;
-            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-[0_0_15px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 transition btn-glow';
         }
 
         function runVagalPrepPhase() {
@@ -844,7 +850,7 @@
             setRingProgress(100);
 
             mainActionBtn.innerHTML = '<i class="fas fa-wind"></i> START VAGAL BREATHING';
-            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-blue-500 hover:bg-blue-400 text-white font-black uppercase text-sm rounded-xl tracking-wider shadow-[0_0_15px_rgba(59,130,246,0.4)] flex items-center justify-center gap-2 transition btn-glow';
         }
 
         function runVagalTimer() {
@@ -864,7 +870,7 @@
 
         function runCompletePhase() {
             currentPhase = 'complete';
-            setGlowColor('bg-nlc-base');
+            setGlowColor('bg-black');
             releaseWakeLock();
 
             phaseBadge.innerText = 'RECOVERY COMPLETE';
@@ -909,17 +915,17 @@
 
         function resetUI() {
             phaseBadge.innerText = 'STANDBY MODE';
-            phaseBadge.className = 'px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-zinc-300 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
+            phaseBadge.className = 'px-2.5 py-1 bg-zinc-900 border border-white/10 text-zinc-300 font-mono text-[10px] uppercase tracking-widest rounded-md font-bold';
             
             timerDisplay.innerText = '00';
             timerSublabel.innerText = 'STATUS';
             setRingProgress(0);
-            setGlowColor('bg-nlc-orange');
+            setGlowColor('bg-[#FF9E4D]');
             rampContainer.classList.add('hidden');
             stopBtn.classList.add('hidden');
             
             mainActionBtn.innerHTML = '<i class="fas fa-play"></i> Start Sequence';
-            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-nlc-orange hover:bg-orange-400 text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-lg flex items-center justify-center gap-2 transition btn-glow';
+            mainActionBtn.className = 'w-full sm:w-auto px-8 py-4 bg-nlc-orange hover:bg-[#D35400] text-black font-black uppercase text-sm rounded-xl tracking-wider shadow-neon-orange flex items-center justify-center gap-2 transition btn-glow';
         }
 
         function stopCoach() {
